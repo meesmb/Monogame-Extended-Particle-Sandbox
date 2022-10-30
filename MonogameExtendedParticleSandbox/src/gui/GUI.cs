@@ -28,7 +28,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
             desktop.Root = pane;
         }
 
-        public static SpinButton createSpinButton(Grid parent, string name, int row, int column = 1, bool showLable = true)
+        public static SpinButton createSpinButton(Grid parent, string name, int row, int buttonColumn = 1, bool showLable = true, int decimalPlaces = 0)
         {
             if (showLable)
             {
@@ -36,7 +36,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
                 {
                     Text = name,
                     GridRow = row,
-                    GridColumn = column - 1,
+                    GridColumn = buttonColumn - 1,
                 };
                 parent.Widgets.Add(label);
             }
@@ -44,10 +44,31 @@ namespace MonogameExtendedParticleSandbox.src.gui
             // Spin button
             var button = new SpinButton
             {
-                GridColumn = column,
+                GridColumn = buttonColumn,
                 GridRow = row,
                 Width = 100,
-                Nullable = false
+                Nullable = false,
+                DecimalPlaces = decimalPlaces
+            };
+            parent.Widgets.Add(button);
+            return button;
+        }
+
+        public static CheckBox createCheckBox(Grid parent, string name, int row, int buttonColumn = 1) 
+        {
+            var label = new Label()
+            {
+                Text = name,
+                GridRow = row,
+                GridColumn = buttonColumn - 1,
+            };
+            parent.Widgets.Add(label);
+
+            // Spin button
+            var button = new CheckBox()
+            {
+                GridColumn = buttonColumn,
+                GridRow = row,
             };
             parent.Widgets.Add(button);
             return button;
