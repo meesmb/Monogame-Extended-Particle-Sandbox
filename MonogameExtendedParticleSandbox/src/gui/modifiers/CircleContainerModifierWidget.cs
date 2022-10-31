@@ -14,16 +14,11 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
         private CircleContainerModifierWidget(Grid parent, int row, ParticleEmitter emitter) : base(parent, row, emitter)
         {
             var modifier = new CircleContainerModifier();
+            this.modifier = modifier;
             emitter.Modifiers.Add(modifier);
-            var grid = new Grid()
-            {
-                GridRow = row,
-                GridColumn = 1,
-            };
-            grid.ColumnsProportions.Add(new Proportion());
-            for (int i = 0; i < 3; i++)
-                grid.RowsProportions.Add(new Proportion());
-            parent.AddChild(grid);
+
+            var text = buildLabel(parent, "Circle Container", row);
+            var grid = buildGrid(parent, row, 3, 1);
 
             var radius = GUI.createSpinButton(grid, "Radius", 0);
             var inside = GUI.createCheckBox(grid, "Inside", 1);

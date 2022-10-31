@@ -35,10 +35,17 @@ namespace MonogameExtendedParticleSandbox.src.gui
 
         private Dictionary<string, ModifierWidget> widgetTypes = new Dictionary<string, ModifierWidget>()
         {
-            {"Age", new AgeModifierWidget()},
+            {"Age", new AgeModifierWidget()}, // needs interpolators
             {"Circle", new CircleContainerModifierWidget()},
             {"RectangleLoop", new RectangleLoopContainerModifierWidget()},
-            {"Drag", new DragModifierWidget()}
+            {"Drag", new DragModifierWidget()},
+            {"Linear Gravity", new LinearGravityModifierWidget()},
+            {"Opacity Fast Fade", new OpacityFastFadeModifierWidget()},
+            {"Rotation Rate", new RotationModifierWidget()},
+            {"Velocity Color", new VelocityColorModifierWidget()}, // needs color selector (HSL)
+            {"Velocity", new VelocityModifierWidget()}, // needs color selector (HSL) and interpolators
+            {"Vortex", new VortexModifierWidget()},
+
         };
         private string currentWidgetType = "Age";
 
@@ -189,7 +196,26 @@ namespace MonogameExtendedParticleSandbox.src.gui
             };
             textButton.Click += (s, e) =>
             {
+                var deleteButton = new TextButton()
+                {
+                    Text = "-",
+                    GridColumn = 0,
+                    GridRow = modifierGridRowNum,
+                };
+                modifierGrid.AddChild(deleteButton);
+                ++modifierGridRowNum;
                 var modifier = widgetTypes[currentWidgetType].create(modifierGrid, modifierGridRowNum++, controller.getEmitter(index));
+                
+                deleteButton.Click += (s, e) =>
+                {
+                    modifierGrid.RemoveChild(deleteButton);
+
+                    modifier.delete();
+                    modifierWidgets.Remove(modifier);
+                    modifierGridRowNum -= 2;
+                };
+
+                
                 modifierWidgets.Add(modifier);
             };
 

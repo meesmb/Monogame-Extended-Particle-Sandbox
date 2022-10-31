@@ -14,17 +14,11 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
         private RectangleLoopContainerModifierWidget(Grid parent, int row, ParticleEmitter emitter) : base(parent, row, emitter)
         {
             var modifier = new RectangleContainerModifier();
+            this.modifier = modifier;
             emitter.Modifiers.Add(modifier);
-            var grid = new Grid()
-            {
-                GridRow = row,
-                GridColumn = 1,
-            };
 
-            grid.ColumnsProportions.Add(new Proportion());
-            for (int i = 0; i < 2; i++)
-                grid.RowsProportions.Add(new Proportion());
-            parent.AddChild(grid);
+            var text = buildLabel(parent, "Rectangle Loop Container", row);
+            var grid = buildGrid(parent, row, 2, 1);
 
             var width = GUI.createSpinButton(grid, "Width", 0);
             var height = GUI.createSpinButton(grid, "Height", 1);

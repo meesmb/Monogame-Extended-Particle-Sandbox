@@ -15,17 +15,11 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
         private DragModifierWidget(Grid parent, int row, ParticleEmitter emitter) : base(parent, row, emitter)
         {
             var modifier = new DragModifier();
+            this.modifier = modifier;
             emitter.Modifiers.Add(modifier);
-            var grid = new Grid()
-            {
-                GridRow = row,
-                GridColumn = 1,
-            };
 
-            grid.ColumnsProportions.Add(new Proportion());
-            for (int i = 0; i < 2; i++)
-                grid.RowsProportions.Add(new Proportion());
-            parent.AddChild(grid);
+            var text = buildLabel(parent, "Drag", row);
+            var grid = buildGrid(parent, row, 2, 1);
 
             var density = GUI.createSpinButton(grid, "Density", 0);
             var dragCoefficient = GUI.createSpinButton(grid, "DragCoefficient", 1);
