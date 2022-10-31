@@ -19,13 +19,12 @@ namespace MonogameExtendedParticleSandbox.src.gui
         private ParticleController controller;
         private int index = 0;
 
-
-
         private readonly int columns = 4;
         private readonly int rows = 20;
 
         private gridSizeHolder topLevelGridSize = new gridSizeHolder();
 
+        private ProfilesWidget profilesWidget;
         private ParametersWidget parametersWidget;
         private ModifiersWidget modifiersWidget;
 
@@ -43,18 +42,20 @@ namespace MonogameExtendedParticleSandbox.src.gui
 
             parent.Content = topLevelGrid;
 
+
             parametersWidget = new ParametersWidget(controller, topLevelGridSize, profile, topLevelGrid, rows, columns);
             topLevelGridSize.RowCount++;
 
             var grid = parametersWidget.grid;
             index = parametersWidget.index;
 
-            modifiersWidget = new ModifiersWidget(topLevelGrid, rows, controller, index);
+            profilesWidget =
+                new ProfilesWidget(topLevelGrid, topLevelGridSize, controller.getEmitter(index));
+
+            modifiersWidget = new ModifiersWidget(topLevelGrid, topLevelGridSize, rows, controller, index);
             var textButton = modifiersWidget.textButton;
             var combo = modifiersWidget.combo;
 
-            grid.Widgets.Add(combo);
-            grid.Widgets.Add(textButton);
         }
 
         

@@ -31,29 +31,33 @@ namespace MonogameExtendedParticleSandbox.src.gui
         public TextButton textButton { get; set; }
         public ComboBox combo { get; set; }
 
-        public ModifiersWidget(Grid topLevelGrid, int rows, ParticleController controller, int index)
+        public ModifiersWidget(Grid topLevelGrid, gridSizeHolder topLevelGridSizeHolder, int rows, ParticleController controller, int index)
         {
+            var selectionGrid = new Grid()
+            {
+                GridRow = topLevelGridSizeHolder.RowCount++,
+                GridColumn = 0,
+            };
+            topLevelGrid.AddChild(selectionGrid);
+
             // modifiers
             textButton = new TextButton()
             {
                 Text = "New Modifier",
-                GridRow = 6,
+                GridRow = 0,
                 GridColumn = 0
             };
-            combo = new ComboBox()
+            selectionGrid.AddChild(textButton);
+
+            combo = GUI.createComboBox(selectionGrid, 0, 1, createModifierWidgets(), (v, combo) =>
             {
-                GridRow = 6,
-                GridColumn = 1,
-            };
-            var items = createModifierWidgets();
-            foreach (var item in items)
-                combo.Items.Add(item);
+                currentWidgetType = combo.Items[v].Text;
+            }, 0);
 
             var modifierGrid = new Grid()
             {
-                GridRow = 1,
+                GridRow = topLevelGridSizeHolder.RowCount++,
                 RowSpacing = 25,
-                ShowGridLines = true,
             };
             modifierGrid.ColumnsProportions.Add(new Proportion()
             {
@@ -65,11 +69,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
             topLevelGrid.AddChild(modifierGrid);
 
             var modifierGridRowNum = new gridSizeHolder();
-            combo.SelectedIndexChanged += (s, e) =>
-            {
-                if (combo.SelectedIndex != null)
-                    currentWidgetType = combo.Items[(int)combo.SelectedIndex].Text;
-            };
+
             textButton.Click += (s, e) =>
             {
                 var deleteButton = new TextButton()
@@ -111,7 +111,6 @@ namespace MonogameExtendedParticleSandbox.src.gui
                     }
 
                 };
-
 
                 modifierWidgets.Add(modifier);
             };

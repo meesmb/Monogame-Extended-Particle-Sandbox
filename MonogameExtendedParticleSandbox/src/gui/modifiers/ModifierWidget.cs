@@ -7,7 +7,7 @@ using MonoGame.Extended.Particles;
 using MonoGame.Extended.Particles.Modifiers;
 using Myra.Graphics2D.UI;
 
-namespace MonogameExtendedParticleSandbox.src.gui
+namespace MonogameExtendedParticleSandbox.src.gui.modifiers
 {
     public class ModifierWidget
     {
@@ -25,7 +25,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
             this.emitter = emitter;
             this.row = row;
         }
-        
+
         public void setRow(int row)
         {
             grid.GridRow = row + 1;
