@@ -21,18 +21,18 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
             var text = buildLabel(parent, "Drag", row);
             var grid = buildGrid(parent, row, 2, 1);
 
-            var density = GUI.createSpinButton(grid, "Density", 0);
-            var dragCoefficient = GUI.createSpinButton(grid, "DragCoefficient", 1);
+            var density = GUI.createSpinButton(grid, "Density / 100", 0);
+            var dragCoefficient = GUI.createSpinButton(grid, "DragCoefficient / 100", 1);
 
             density.ValueChanged += (e, s) =>
             {
                 if (s.NewValue != null)
-                    modifier.Density = (int)s.NewValue;
+                    modifier.Density = (int)s.NewValue / 100;
             };
             dragCoefficient.ValueChanged += (e, s) =>
             {
                 if (s.NewValue != null)
-                    modifier.DragCoefficient = (int)s.NewValue;
+                    modifier.DragCoefficient = (int)s.NewValue / 100;
             };
 
         }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MonoGame.Extended.Particles;
 using MonoGame.Extended.Particles.Modifiers;
+using MonoGame.Extended.Particles.Modifiers.Interpolators;
 
 namespace MonogameExtendedParticleSandbox.src.gui.modifiers
 {
@@ -21,6 +22,8 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
             };
             t.Text = "Age";
             parent.AddChild(t);
+
+            modifier = new AgeModifier();
         }
 
         public AgeModifierWidget() : base(null, 0, null)

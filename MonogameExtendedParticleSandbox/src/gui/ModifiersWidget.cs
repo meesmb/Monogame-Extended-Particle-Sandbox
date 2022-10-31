@@ -15,6 +15,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
             {"Age", new AgeModifierWidget()}, // needs interpolators
             {"Circle", new CircleContainerModifierWidget()},
             {"RectangleLoop", new RectangleLoopContainerModifierWidget()},
+            {"Rectangle", new RectangleContainerModifierWidget()},
             {"Drag", new DragModifierWidget()},
             {"Linear Gravity", new LinearGravityModifierWidget()},
             {"Opacity Fast Fade", new OpacityFastFadeModifierWidget()},
@@ -49,7 +50,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
             };
             selectionGrid.AddChild(textButton);
 
-            combo = GUI.createComboBox(selectionGrid, 0, 1, createModifierWidgets(), (v, combo) =>
+            combo = GUI.createComboBox(selectionGrid, 0, 1, GUI.convertDictionaryToList(widgetTypes), (v, combo) =>
             {
                 currentWidgetType = combo.Items[v].Text;
             }, 0);
@@ -114,21 +115,6 @@ namespace MonogameExtendedParticleSandbox.src.gui
 
                 modifierWidgets.Add(modifier);
             };
-        }
-        private List<ListItem> createModifierWidgets()
-        {
-            List<ListItem> items = new List<ListItem>();
-
-            foreach (var widget in this.widgetTypes)
-            {
-                var item = new ListItem
-                {
-                    Text = widget.Key
-                };
-                items.Add(item);
-            }
-
-            return items;
         }
     }
 }

@@ -49,7 +49,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
             };
             selectionGrid.AddChild(label);
 
-            var combo = GUI.createComboBox(selectionGrid, 0, 1, createProfileWidgets(), (v, combo) =>
+            var combo = GUI.createComboBox(selectionGrid, 0, 1, GUI.convertDictionaryToList(profiles), (v, combo) =>
             {
                 var key = combo.Items[v].Text;
                 if (currentWidget != null)
@@ -70,22 +70,6 @@ namespace MonogameExtendedParticleSandbox.src.gui
 
             topLevelGrid.AddChild(grid);
 
-        }
-
-        private List<ListItem> createProfileWidgets()
-        {
-            List<ListItem> items = new List<ListItem>();
-
-            foreach (var widget in this.profiles)
-            {
-                var item = new ListItem
-                {
-                    Text = widget.Key
-                };
-                items.Add(item);
-            }
-
-            return items;
         }
     }
 }

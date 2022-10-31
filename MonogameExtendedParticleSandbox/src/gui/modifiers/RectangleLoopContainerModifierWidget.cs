@@ -13,7 +13,7 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
     {
         private RectangleLoopContainerModifierWidget(Grid parent, int row, ParticleEmitter emitter) : base(parent, row, emitter)
         {
-            var modifier = new RectangleContainerModifier();
+            var modifier = new RectangleLoopContainerModifier();
             this.modifier = modifier;
             emitter.Modifiers.Add(modifier);
 
@@ -31,7 +31,7 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
             height.ValueChanged += (e, s) =>
             {
                 if (s.NewValue != null)
-                    modifier.Width = (int)s.NewValue;
+                    modifier.Height = (int)s.NewValue;
             };
 
         }
