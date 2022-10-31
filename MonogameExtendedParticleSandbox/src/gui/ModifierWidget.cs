@@ -17,13 +17,25 @@ namespace MonogameExtendedParticleSandbox.src.gui
         protected Grid grid;
         protected Label label;
         protected Modifier modifier;
+        public TextButton deleteButton { get; set; }
+
         public ModifierWidget(Grid parent, int row, ParticleEmitter emitter)
         {
             this.parent = parent;
             this.emitter = emitter;
             this.row = row;
         }
+        
+        public void setRow(int row)
+        {
+            grid.GridRow = row + 1;
+            label.GridRow = row;
+        }
 
+        public int getRow()
+        {
+            return grid.GridRow;
+        }
         public virtual ModifierWidget create(Grid parent, int row, ParticleEmitter emitter)
         {
             return new ModifierWidget(parent, row, emitter);
