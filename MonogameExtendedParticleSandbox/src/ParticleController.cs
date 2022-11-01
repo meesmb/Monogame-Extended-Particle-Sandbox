@@ -19,7 +19,7 @@ namespace MonogameExtendedParticleSandbox.src
         public ParticleController(Texture2D texture, Vector2 pos)
         {
             region = new TextureRegion2D(texture);
-            effect = new ParticleEffect(autoTrigger: false)
+            effect = new ParticleEffect(autoTrigger: true)
             {
                 Position = pos,
             };

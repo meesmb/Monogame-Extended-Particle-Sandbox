@@ -38,7 +38,6 @@ namespace MonogameExtendedParticleSandbox.src.gui
         {
             grid = new Grid
             {
-                ShowGridLines = false,
                 ColumnSpacing = 8,
                 GridRow = topLevelGridRowNum.RowCount
             };

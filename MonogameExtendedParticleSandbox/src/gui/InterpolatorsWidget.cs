@@ -16,6 +16,11 @@ namespace MonogameExtendedParticleSandbox.src.gui
         private Dictionary<string, InterpolatorWidget> widgetTypes = new Dictionary<string, InterpolatorWidget>()
         {
             {"Color", new ColorInterpolatorWidget()}, 
+            {"Hue", new HueInterpolatorWidget()},
+            {"Opacity", new OpacityInterpolatorWidget()},
+            {"Rotation", new RotationInterpolatorWidget()},
+            {"Scale", new ScaleInterpolatorWidget()}
+
         };
 
         private DeletableWidgetList deletableListWidget;

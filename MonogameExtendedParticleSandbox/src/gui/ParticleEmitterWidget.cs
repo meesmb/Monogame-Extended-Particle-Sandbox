@@ -34,7 +34,6 @@ namespace MonogameExtendedParticleSandbox.src.gui
 
             var topLevelGrid = new Grid()
             {
-                ShowGridLines = true
             };
             topLevelGrid.ColumnsProportions.Add(new Proportion());
             topLevelGrid.ColumnsProportions.Add(new Proportion());
