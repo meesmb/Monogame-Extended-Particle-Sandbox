@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MonogameExtendedParticleSandbox.src.gui
 {
-    public class gridSizeHolder
+    public class GridSizeHolder
     {
-        public gridSizeHolder()
+        public GridSizeHolder()
         {
             RowCount = 0;
             ColumnCount = 0;

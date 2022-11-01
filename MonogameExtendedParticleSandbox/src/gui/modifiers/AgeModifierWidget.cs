@@ -12,18 +12,25 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
 {
     public class AgeModifierWidget : ModifierWidget
     {
-        private AgeModifier modifier;
+        private InterpolatorsWidget interpolators;
+        private GridSizeHolder gridSizeHolder = new GridSizeHolder();
         private AgeModifierWidget(Grid parent, int row, ParticleEmitter emitter) : base(parent, row, emitter)
         {
-            var t = new TextButton()
-            {
-                GridRow = row,
-                GridColumn = 1
-            };
-            t.Text = "Age";
-            parent.AddChild(t);
+            var modifier = new AgeModifier();
+            this.modifier = modifier;
+            emitter.Modifiers.Add(modifier);
 
-            modifier = new AgeModifier();
+            var text = buildLabel(parent, "Interpolators", row);
+            var grid = buildGrid(parent, row, 1, 1);
+            grid.ShowGridLines = true;
+
+            interpolators = new InterpolatorsWidget(grid, gridSizeHolder, modifier.Interpolators);
+        }
+
+        protected override void onDelete()
+        {
+            base.onDelete();
+            interpolators.delete();
         }
 
         public AgeModifierWidget() : base(null, 0, null)

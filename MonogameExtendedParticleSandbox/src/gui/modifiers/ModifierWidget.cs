@@ -9,15 +9,10 @@ using Myra.Graphics2D.UI;
 
 namespace MonogameExtendedParticleSandbox.src.gui.modifiers
 {
-    public class ModifierWidget
+    public class ModifierWidget : DeletableListWidget
     {
-        protected Grid parent;
-        protected int row;
         protected ParticleEmitter emitter;
-        protected Grid grid;
-        protected Label label;
         protected Modifier modifier;
-        public TextButton deleteButton { get; set; }
 
         public ModifierWidget(Grid parent, int row, ParticleEmitter emitter)
         {
@@ -26,25 +21,13 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
             this.row = row;
         }
 
-        public void setRow(int row)
-        {
-            grid.GridRow = row + 1;
-            label.GridRow = row;
-        }
-
-        public int getRow()
-        {
-            return grid.GridRow;
-        }
         public virtual ModifierWidget create(Grid parent, int row, ParticleEmitter emitter)
         {
             return new ModifierWidget(parent, row, emitter);
         }
 
-        public virtual void delete()
+        protected override void onDelete()
         {
-            parent.RemoveChild(grid);
-            parent.RemoveChild(label);
             emitter.Modifiers.Remove(modifier);
         }
 
@@ -59,22 +42,6 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
             parent.AddChild(label);
             this.label = label;
             return label;
-        }
-
-        protected Grid buildGrid(Grid parent, int row, int rowsInGrid, int columnsInGrid)
-        {
-            var grid = new Grid()
-            {
-                GridRow = row,
-                GridColumn = 1,
-            };
-            for (int i = 0; i < columnsInGrid; i++)
-                grid.ColumnsProportions.Add(new Proportion());
-            for (int i = 0; i < rowsInGrid; i++)
-                grid.RowsProportions.Add(new Proportion());
-            parent.AddChild(grid);
-            this.grid = grid;
-            return grid;
         }
     }
 }

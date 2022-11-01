@@ -21,12 +21,12 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
 
         private VelocityColorModifierWidget(Grid parent, int row, ParticleEmitter emitter) : base(parent, row, emitter)
         {
-            var modifier = new VelocityColorModifier();
-
-            modifier.StationaryColor = DEFAULT_STATIONARY_COLOR.ToHsl();
-            modifier.VelocityColor = DEFAULT_VELOCITY_COLOR.ToHsl();
-            modifier.VelocityThreshold = DEFAULT_VELOCITY_THRESHOLD;
-
+            var modifier = new VelocityColorModifier
+            {
+                StationaryColor = DEFAULT_STATIONARY_COLOR.ToHsl(),
+                VelocityColor = DEFAULT_VELOCITY_COLOR.ToHsl(),
+                VelocityThreshold = DEFAULT_VELOCITY_THRESHOLD,
+            };
 
             this.modifier = modifier;
             emitter.Modifiers.Add(modifier);

@@ -34,7 +34,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
         public readonly int DEFAULT_SCALE_2 = 4;
 
 
-        public ParametersWidget(ParticleController controller, gridSizeHolder topLevelGridRowNum, Profile profile, Grid topLevelGrid, int rows, int columns)
+        public ParametersWidget(ParticleController controller, GridSizeHolder topLevelGridRowNum, Profile profile, Grid topLevelGrid, int rows, int columns)
         {
             grid = new Grid
             {

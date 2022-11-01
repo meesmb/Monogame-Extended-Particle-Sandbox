@@ -26,7 +26,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
 
         private ProfileWidget currentWidget;
 
-        public ProfilesWidget(Grid topLevelGrid, gridSizeHolder topLevelGridSizeHolder, ParticleEmitter emitter)
+        public ProfilesWidget(Grid topLevelGrid, GridSizeHolder topLevelGridSizeHolder, ParticleEmitter emitter)
         {
             var selectionGrid = new Grid()
             {
