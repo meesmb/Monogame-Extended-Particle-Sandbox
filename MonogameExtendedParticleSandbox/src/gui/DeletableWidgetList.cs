@@ -47,12 +47,13 @@ namespace MonogameExtendedParticleSandbox.src.gui
             modifierGrid = new Grid()
             {
                 GridRow = topLevelGridSizeHolder.RowCount++,
-                
+                ShowGridLines = true
             };
+
             modifierGrid.ColumnsProportions.Add(new Proportion()
             {
                 Type = ProportionType.Pixels,
-                Value = 50
+                Value = 50,
             });
             for (int i = 0; i < MAX_ROWS; i++)
                 modifierGrid.RowsProportions.Add(new Proportion());
@@ -66,13 +67,11 @@ namespace MonogameExtendedParticleSandbox.src.gui
                 {
                     Text = "-",
                     GridColumn = 0,
-                    GridRow = modifierGridRowNum.RowCount,
+                    GridRow = modifierGridRowNum.RowCount++,
                 };
                 modifierGrid.AddChild(deleteButton);
-                ++modifierGridRowNum.RowCount;
 
                 var modifier = onCreate(modifierGrid, modifierGridRowNum.RowCount++, currentWidgetType);
-                //var modifier = widgetTypes[currentWidgetType].create(modifierGrid, modifierGridRowNum.RowCount++, controller.getEmitter(index));
 
                 modifier.deleteButton = deleteButton;
 

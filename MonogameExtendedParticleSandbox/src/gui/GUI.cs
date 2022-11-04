@@ -31,7 +31,6 @@ namespace MonogameExtendedParticleSandbox.src.gui
         {
             topGrid = new Grid()
             {
-                ShowGridLines = true,
             };
             topGrid.ColumnsProportions.Add(new Proportion()
             {
@@ -48,9 +47,6 @@ namespace MonogameExtendedParticleSandbox.src.gui
                 (grid, i, arg3) =>
                 {
                     topGrid.RowsProportions.Add(new Proportion());
-                    topGrid.RowsProportions.Add(new Proportion());
-                    topGrid.RowsProportions.Add(new Proportion());
-                    gridSizeHolder.RowCount++;
                     return new ParticleEmitterWidget(controller, grid, gridSizeHolder);
                 });
 

@@ -19,7 +19,8 @@ namespace MonogameExtendedParticleSandbox.src.gui
         {
             if (grid != null)
                 grid.GridRow = row + 1;
-            label.GridRow = row;
+            if (label != null)
+                label.GridRow = row;
         }
 
         public int getRow()

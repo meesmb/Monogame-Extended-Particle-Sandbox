@@ -17,7 +17,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
     {
 
         private ParticleController controller;
-        private int index = 0;
+        private EmitterIndex index;
 
         private readonly int columns = 4;
         private readonly int rows = 30;
@@ -30,11 +30,13 @@ namespace MonogameExtendedParticleSandbox.src.gui
 
         private Grid topLevelGrid;
         private Grid parent;
+        private GridSizeHolder parentHolder;
 
         public ParticleEmitterWidget(ParticleController controller, Grid parent, GridSizeHolder parentHolder) 
         {
             this.controller = controller;
             this.parent = parent;
+            this.parentHolder = parentHolder;
 
             topLevelGrid = new Grid()
             {
@@ -72,6 +74,8 @@ namespace MonogameExtendedParticleSandbox.src.gui
             profilesWidget.delete();
             controller.removeEmitter(index);
             parent.RemoveChild(topLevelGrid);
+            parentHolder.RowCount--;
         }
+
     }
 }

@@ -27,7 +27,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
 
         private DeletableWidgetList deletableListWidget;
 
-        public ModifiersWidget(Grid topLevelGrid, GridSizeHolder topLevelGridSizeHolder, int rows, ParticleController controller, int index)
+        public ModifiersWidget(Grid topLevelGrid, GridSizeHolder topLevelGridSizeHolder, int rows, ParticleController controller, EmitterIndex index)
         {
             deletableListWidget = new DeletableWidgetList(topLevelGrid, "New Modifier", topLevelGridSizeHolder,
                 GUI.convertDictionaryToList(widgetTypes), 

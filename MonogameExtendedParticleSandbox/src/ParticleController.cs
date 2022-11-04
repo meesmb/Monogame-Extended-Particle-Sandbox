@@ -30,10 +30,10 @@ namespace MonogameExtendedParticleSandbox.src
             return region;
         }
 
-        public int addEmitter(ParticleEmitter emitter)
+        public EmitterIndex addEmitter(ParticleEmitter emitter)
         {
             effect.Emitters.Add(emitter);
-            return effect.Emitters.Count - 1;
+            return new EmitterIndex(effect.Emitters.Count - 1);
         }
 
         public void setParticleReleaseParameters(int index, ParticleReleaseParameters parameters)
@@ -50,14 +50,17 @@ namespace MonogameExtendedParticleSandbox.src
         /// removes an emitter from the list. SHIFTS INDEXES!!!
         /// </summary>
         /// <param name="index"></param>
-        public void removeEmitter(int index)
+        public void removeEmitter(EmitterIndex index)
         {
-            effect.Emitters.RemoveAt(index);
+            Console.Out.WriteLine(index.get());
+            effect.Emitters[index.get()].Dispose();
+            effect.Emitters.RemoveAt(index.get());
+            index.delete();
         }
 
-        public ParticleEmitter getEmitter(int index)
+        public ParticleEmitter getEmitter(EmitterIndex index)
         {
-            return effect.Emitters[index];
+            return effect.Emitters[index.get()];
         }
 
         public void update(GameTime gameTime, Transform2 transform)

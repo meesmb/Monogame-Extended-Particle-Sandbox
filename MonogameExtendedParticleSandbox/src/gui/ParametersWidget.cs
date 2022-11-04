@@ -20,7 +20,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
         private readonly string ROTATION = "Rotation";
         private readonly string SCALE = "Scale";
 
-        public int index { get; }
+        public EmitterIndex index { get; }
         private ParticleController controller;
         public Grid grid { get; set; }
         public Grid topLevelGrid { get; }
