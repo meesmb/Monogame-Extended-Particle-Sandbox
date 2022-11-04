@@ -33,5 +33,11 @@ namespace MonogameExtendedParticleSandbox.src.gui
                 GUI.convertDictionaryToList(widgetTypes), 
                 (grid, i, widgetName) => widgetTypes[widgetName].create(grid, i, controller.getEmitter(index)));
         }
+
+        public void delete()
+        {
+
+            deletableListWidget.delete();
+        }
     }
 }

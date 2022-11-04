@@ -25,31 +25,35 @@ namespace MonogameExtendedParticleSandbox.src.gui
         };
 
         private ProfileWidget currentWidget;
+        private Grid topGrid, widgetGrid, grid;
+        private Label label;
+        private ComboBox combo;
 
         public ProfilesWidget(Grid topLevelGrid, GridSizeHolder topLevelGridSizeHolder, ParticleEmitter emitter)
         {
-            var selectionGrid = new Grid()
+            topGrid = topLevelGrid;
+            widgetGrid = new Grid()
             {
                 GridRow = topLevelGridSizeHolder.RowCount++,
                 GridColumn = 0,
             };
-            topLevelGrid.AddChild(selectionGrid);
+            topLevelGrid.AddChild(widgetGrid);
 
-            var grid = new Grid()
+            grid = new Grid()
             {
                 GridRow = topLevelGridSizeHolder.RowCount++,
                 GridColumn = 0
             };
 
-            var label = new Label()
+            label = new Label()
             {
                 GridColumn = 0,
                 GridRow = 0,
                 Text = "Profile: "
             };
-            selectionGrid.AddChild(label);
+            widgetGrid.AddChild(label);
 
-            var combo = GUI.createComboBox(selectionGrid, 0, 1, GUI.convertDictionaryToList(profiles), (v, combo) =>
+            combo = GUI.createComboBox(widgetGrid, 0, 1, GUI.convertDictionaryToList(profiles), (v, combo) =>
             {
                 var key = combo.Items[v].Text;
                 if (currentWidget != null)
@@ -70,6 +74,14 @@ namespace MonogameExtendedParticleSandbox.src.gui
 
             topLevelGrid.AddChild(grid);
 
+        }
+
+        public void delete()
+        {
+            widgetGrid.RemoveChild(label);
+            widgetGrid.RemoveChild(combo);
+            topGrid.RemoveChild(grid);
+            topGrid.RemoveChild(widgetGrid);
         }
     }
 }

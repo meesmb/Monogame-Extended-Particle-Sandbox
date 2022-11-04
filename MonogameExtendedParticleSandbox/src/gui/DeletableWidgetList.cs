@@ -16,11 +16,14 @@ namespace MonogameExtendedParticleSandbox.src.gui
         public TextButton textButton { get; set; }
         public ComboBox combo { get; set; }
 
+        private Grid topLevelGrid, selectionGrid, modifierGrid;
+
         private readonly int MAX_ROWS = 20;
 
         public DeletableWidgetList(Grid topLevelGrid, string addButtonText, GridSizeHolder topLevelGridSizeHolder, List<ListItem> widgets, Func<Grid, int, string, DeletableListWidget> onCreate)
         {
-            var selectionGrid = new Grid()
+            this.topLevelGrid = topLevelGrid;
+            selectionGrid = new Grid()
             {
                 GridRow = topLevelGridSizeHolder.RowCount++,
                 GridColumn = 0,
@@ -41,7 +44,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
             }, 0);
             currentWidgetType = combo.Items[0].Text;
 
-            var modifierGrid = new Grid()
+            modifierGrid = new Grid()
             {
                 GridRow = topLevelGridSizeHolder.RowCount++,
                 
@@ -111,6 +114,13 @@ namespace MonogameExtendedParticleSandbox.src.gui
             {
                 mod.delete();
             }
+
+            selectionGrid.RemoveChild(textButton);
+            selectionGrid.RemoveChild(combo);
+
+            topLevelGrid.RemoveChild(modifierGrid);
+            topLevelGrid.RemoveChild(selectionGrid);
+            
         }
     }
 }

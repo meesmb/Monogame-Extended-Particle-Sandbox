@@ -16,13 +16,49 @@ namespace MonogameExtendedParticleSandbox.src.gui
         private Desktop desktop;
         private Dictionary<string, SpinButton> spinButtons = new Dictionary<string, SpinButton>();
 
+        private GridSizeHolder gridSizeHolder = new GridSizeHolder();
+        private Grid topGrid;
+
+        private DeletableWidgetList widgets;
+
+        private Dictionary<string, ParticleEmitterWidget> particleEmitters =
+            new Dictionary<string, ParticleEmitterWidget>()
+            {
+                { "Default", new ParticleEmitterWidget() }
+            };
+
         public GUI(ParticleController controller)
         {
+            topGrid = new Grid()
+            {
+                ShowGridLines = true,
+            };
+            topGrid.ColumnsProportions.Add(new Proportion()
+            {
+                
+            });
+            topGrid.ColumnsProportions.Add(new Proportion());
+            for (int i = 0; i < 1; i++)
+                topGrid.RowsProportions.Add(new Proportion());
+
+            gridSizeHolder.ColumnCount++;
+
+            widgets = new DeletableWidgetList(topGrid, "Create Emitter", gridSizeHolder,
+                convertDictionaryToList(particleEmitters),
+                (grid, i, arg3) =>
+                {
+                    topGrid.RowsProportions.Add(new Proportion());
+                    topGrid.RowsProportions.Add(new Proportion());
+                    topGrid.RowsProportions.Add(new Proportion());
+                    gridSizeHolder.RowCount++;
+                    return new ParticleEmitterWidget(controller, grid, gridSizeHolder);
+                });
+
             var pane = new HorizontalSplitPane();
             var scrollViewer = new ScrollViewer();
             pane.Widgets.Add(scrollViewer);
+            scrollViewer.Content = topGrid;
 
-            var emmiterWidget = new ParticleEmitterWidget(controller, scrollViewer, Profile.BoxUniform(100, 100));
 
             // Add it to the desktop
             desktop = new Desktop();

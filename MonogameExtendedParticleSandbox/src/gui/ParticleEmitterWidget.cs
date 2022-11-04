@@ -13,7 +13,7 @@ using Myra.Graphics2D.UI;
 
 namespace MonogameExtendedParticleSandbox.src.gui
 {
-    public class ParticleEmitterWidget
+    public class ParticleEmitterWidget : DeletableListWidget
     {
 
         private ParticleController controller;
@@ -25,28 +25,33 @@ namespace MonogameExtendedParticleSandbox.src.gui
         private GridSizeHolder topLevelGridSize = new GridSizeHolder();
 
         private ProfilesWidget profilesWidget;
-        private ParametersWidget parametersWidget;
+        private parametersWidget parametersWidget;
         private ModifiersWidget modifiersWidget;
 
-        public ParticleEmitterWidget(ParticleController controller, ScrollViewer parent, Profile profile)
+        private Grid topLevelGrid;
+        private Grid parent;
+
+        public ParticleEmitterWidget(ParticleController controller, Grid parent, GridSizeHolder parentHolder) 
         {
             this.controller = controller;
+            this.parent = parent;
 
-            var topLevelGrid = new Grid()
+            topLevelGrid = new Grid()
             {
+                GridColumn = parentHolder.ColumnCount,
+                GridRow = parentHolder.RowCount++,
             };
             topLevelGrid.ColumnsProportions.Add(new Proportion());
             topLevelGrid.ColumnsProportions.Add(new Proportion());
             for (int i = 0; i < rows; i++)
                 topLevelGrid.RowsProportions.Add(new Proportion());
 
-            parent.Content = topLevelGrid;
+            parent.AddChild(topLevelGrid);
 
 
-            parametersWidget = new ParametersWidget(controller, topLevelGridSize, profile, topLevelGrid, rows, columns);
+            parametersWidget = new parametersWidget(controller, topLevelGridSize, Profile.BoxUniform(100, 100), topLevelGrid, rows, columns);
             topLevelGridSize.RowCount++;
 
-            var grid = parametersWidget.grid;
             index = parametersWidget.index;
 
             profilesWidget =
@@ -55,6 +60,18 @@ namespace MonogameExtendedParticleSandbox.src.gui
             modifiersWidget = new ModifiersWidget(topLevelGrid, topLevelGridSize, rows, controller, index);
         }
 
-        
+        public ParticleEmitterWidget()
+        {
+
+        }
+
+        protected override void onDelete()
+        {
+            parametersWidget.delete();
+            modifiersWidget.delete();
+            profilesWidget.delete();
+            controller.removeEmitter(index);
+            parent.RemoveChild(topLevelGrid);
+        }
     }
 }

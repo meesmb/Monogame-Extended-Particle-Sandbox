@@ -10,7 +10,7 @@ using Myra.Graphics2D.UI;
 
 namespace MonogameExtendedParticleSandbox.src.gui
 {
-    public class ParametersWidget
+    public class parametersWidget
     {        
         
         private readonly string CAPACITY = "Capacity";
@@ -20,8 +20,10 @@ namespace MonogameExtendedParticleSandbox.src.gui
         private readonly string ROTATION = "Rotation";
         private readonly string SCALE = "Scale";
 
-        public int index { get; set; }
+        public int index { get; }
+        private ParticleController controller;
         public Grid grid { get; set; }
+        public Grid topLevelGrid { get; }
 
         public readonly int DEFAULT_QUANTITY = 300;
         public readonly int DEFAULT_TIMESPAN = 2000;
@@ -33,14 +35,19 @@ namespace MonogameExtendedParticleSandbox.src.gui
         public readonly int DEFAULT_SCALE_1 = 3;
         public readonly int DEFAULT_SCALE_2 = 4;
 
+        private SpinButton c, ls, quantity, speed1, speed2, rotation1, rotation2, scale1, scale2;
 
-        public ParametersWidget(ParticleController controller, GridSizeHolder topLevelGridRowNum, Profile profile, Grid topLevelGrid, int rows, int columns)
+
+        public parametersWidget(ParticleController controller, GridSizeHolder topLevelGridRowNum, Profile profile, Grid topLevelGrid, int rows, int columns)
         {
+            this.controller = controller;
+
             grid = new Grid
             {
                 ColumnSpacing = 8,
                 GridRow = topLevelGridRowNum.RowCount
             };
+            this.topLevelGrid = topLevelGrid;
             for (int i = 0; i < columns; i++)
                 grid.ColumnsProportions.Add(new Proportion());
             for (int i = 0; i < rows; i++)
@@ -140,6 +147,22 @@ namespace MonogameExtendedParticleSandbox.src.gui
             });
 
         }
+
+        public void delete()
+        {
+            grid.RemoveChild(c);
+            grid.RemoveChild(ls);
+            grid.RemoveChild(quantity);
+            grid.RemoveChild(speed1);
+            grid.RemoveChild(speed2);
+            grid.RemoveChild(rotation1);
+            grid.RemoveChild(rotation1);
+            grid.RemoveChild(scale1);
+            grid.RemoveChild(scale2);
+            topLevelGrid.RemoveChild(grid);
+        }
+
+
         private Range<float> calculateNewRangeMin(Range<float> old, float min, SpinButton two)
         {
             float max = old.Max;
