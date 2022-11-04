@@ -36,7 +36,7 @@ namespace MonogameExtendedParticleSandbox.src.gui.interpolators
                 interpolator.StartValue = new Vector2(interpolator.StartValue.Y, v);
 
             }, (int)DEFAULT_START_VALUE.X, (int)DEFAULT_START_VALUE.Y);
-            GUI.createDualSpinButton(grid, 0, 0, "EndValue", (v) =>
+            GUI.createDualSpinButton(grid, 1, 0, "EndValue", (v) =>
             {
                 interpolator.EndValue = new Vector2(v, interpolator.EndValue.X);
             }, (v) =>

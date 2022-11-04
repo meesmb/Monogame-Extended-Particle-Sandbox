@@ -52,10 +52,9 @@ namespace MonogameExtendedParticleSandbox.src.gui
 
 
             parametersWidget = new parametersWidget(controller, topLevelGridSize, Profile.BoxUniform(100, 100), topLevelGrid, rows, columns);
-            topLevelGridSize.RowCount++;
-
             index = parametersWidget.index;
 
+            topLevelGridSize.RowCount++;
             profilesWidget =
                 new ProfilesWidget(topLevelGrid, topLevelGridSize, controller.getEmitter(index));
 

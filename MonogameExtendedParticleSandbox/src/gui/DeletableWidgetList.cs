@@ -47,7 +47,6 @@ namespace MonogameExtendedParticleSandbox.src.gui
             modifierGrid = new Grid()
             {
                 GridRow = topLevelGridSizeHolder.RowCount++,
-                ShowGridLines = true
             };
 
             modifierGrid.ColumnsProportions.Add(new Proportion()
@@ -63,6 +62,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
 
             textButton.Click += (s, e) =>
             {
+                Console.Out.WriteLine("created at: " + modifierGridRowNum.RowCount);
                 var deleteButton = new TextButton()
                 {
                     Text = "-",

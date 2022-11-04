@@ -29,15 +29,10 @@ namespace MonogameExtendedParticleSandbox.src.gui
 
         public GUI(ParticleController controller)
         {
-            topGrid = new Grid()
-            {
-            };
-            topGrid.ColumnsProportions.Add(new Proportion()
-            {
-                
-            });
+            topGrid = new Grid();
             topGrid.ColumnsProportions.Add(new Proportion());
-            for (int i = 0; i < 1; i++)
+            topGrid.ColumnsProportions.Add(new Proportion());
+            for (int i = 0; i < 2; i++)
                 topGrid.RowsProportions.Add(new Proportion());
 
             gridSizeHolder.ColumnCount++;
@@ -47,7 +42,10 @@ namespace MonogameExtendedParticleSandbox.src.gui
                 (grid, i, arg3) =>
                 {
                     topGrid.RowsProportions.Add(new Proportion());
-                    return new ParticleEmitterWidget(controller, grid, gridSizeHolder);
+                    var holder = new GridSizeHolder();
+                    holder.RowCount = i;
+                    holder.ColumnCount = gridSizeHolder.ColumnCount;
+                    return new ParticleEmitterWidget(controller, grid, holder);
                 });
 
             var pane = new HorizontalSplitPane();
