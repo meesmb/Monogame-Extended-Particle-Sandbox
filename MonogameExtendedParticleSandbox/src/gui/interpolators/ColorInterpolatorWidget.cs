@@ -28,7 +28,7 @@ namespace MonogameExtendedParticleSandbox.src.gui.interpolators
             interpolators.Add(interpolator);
 
             var text = buildLabel(parent, "Color", row);
-            var grid = buildGrid(parent, row, 2, 1);
+            grid = buildGrid(parent, row, 2, 1);
 
             var picker1 = GUI.createColorPicker(grid, "StartValue", 0, 0, DEFAULT_START_VALUE, (hsl) =>
             {

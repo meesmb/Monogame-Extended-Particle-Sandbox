@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Myra.Graphics2D.UI;
 
-namespace MonogameExtendedParticleSandbox.src.gui
+namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
 {
     public abstract class DeletableListWidget
     {
@@ -18,9 +18,10 @@ namespace MonogameExtendedParticleSandbox.src.gui
         public void setRow(int row)
         {
             if (grid != null)
-                grid.GridRow = row + 1;
+                grid.GridRow = row;
             if (label != null)
-                label.GridRow = row;
+                label.GridRow = (row - 1 < 0) ? 0 : row - 1;
+            this.row = row;
         }
 
         public int getRow()
@@ -33,8 +34,8 @@ namespace MonogameExtendedParticleSandbox.src.gui
         {
             if (parent != null)
             {
-                    parent.RemoveChild(grid);
-                    parent.RemoveChild(label);
+                parent.RemoveChild(grid);
+                parent.RemoveChild(label);
             }
 
             onDelete();
@@ -44,7 +45,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
 
         protected Grid buildGrid(Grid parent, int row, int rowsInGrid, int columnsInGrid)
         {
-            var grid = new Grid()
+            grid = new Grid()
             {
                 GridRow = row,
                 GridColumn = 1,
@@ -54,20 +55,18 @@ namespace MonogameExtendedParticleSandbox.src.gui
             for (int i = 0; i < rowsInGrid; i++)
                 grid.RowsProportions.Add(new Proportion());
             parent.AddChild(grid);
-            this.grid = grid;
             return grid;
         }
 
         protected Label buildLabel(Grid parent, string name, int row)
         {
-            var label = new Label()
+            label = new Label()
             {
                 Text = name,
                 GridColumn = 1,
                 GridRow = row - 1
             };
             parent.AddChild(label);
-            this.label = label;
             return label;
         }
     }

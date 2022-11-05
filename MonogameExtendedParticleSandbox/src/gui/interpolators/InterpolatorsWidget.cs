@@ -5,17 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using MonoGame.Extended.Particles.Modifiers;
 using MonoGame.Extended.Particles.Modifiers.Interpolators;
-using MonogameExtendedParticleSandbox.src.gui.interpolators;
+using MonogameExtendedParticleSandbox.src.gui.miscWidgets;
 using MonogameExtendedParticleSandbox.src.gui.modifiers;
 using Myra.Graphics2D.UI;
 
-namespace MonogameExtendedParticleSandbox.src.gui
+namespace MonogameExtendedParticleSandbox.src.gui.interpolators
 {
     public class InterpolatorsWidget
     {
         private Dictionary<string, InterpolatorWidget> widgetTypes = new Dictionary<string, InterpolatorWidget>()
         {
-            {"Color", new ColorInterpolatorWidget()}, 
+            {"Color", new ColorInterpolatorWidget()},
             {"Hue", new HueInterpolatorWidget()},
             {"Opacity", new OpacityInterpolatorWidget()},
             {"Rotation", new RotationInterpolatorWidget()},

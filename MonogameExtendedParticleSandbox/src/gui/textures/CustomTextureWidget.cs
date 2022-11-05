@@ -31,7 +31,6 @@ namespace MonogameExtendedParticleSandbox.src.gui.textures
                 oldTex.Dispose();
                 emitter.TextureRegion = textureRegion;
             });
-
         }
 
         public CustomTextureWidget() : base(null, 0, null, null) { }

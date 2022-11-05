@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
-using MonogameExtendedParticleSandbox.src.gui.textures;
+using MonogameExtendedParticleSandbox.src.gui.miscWidgets;
 using Myra.Graphics2D.UI;
 
-namespace MonogameExtendedParticleSandbox.src.gui
+namespace MonogameExtendedParticleSandbox.src.gui.textures
 {
     public class TexturesWidget
     {

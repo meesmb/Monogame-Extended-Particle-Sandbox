@@ -12,6 +12,7 @@ using MonoGame.Extended.ViewportAdapters;
 using MonogameExtendedParticleSandbox.src;
 using MonogameExtendedParticleSandbox.src.gui;
 using Myra;
+using Console = System.Console;
 
 namespace MonogameExtendedParticleSandbox
 {
@@ -66,36 +67,7 @@ namespace MonogameExtendedParticleSandbox
 
         private void buildEmitter(ParticleController controller)
         {
-            
-            // int i = controller.addEmitter(new ParticleEmitter(controller.getRegion(), 500,
-            //     TimeSpan.FromSeconds(2.5), Profile.BoxUniform(100, 250))
-            // {
-            //     Parameters = new ParticleReleaseParameters
-            //     {
-            //         Speed = new Range<float>(0f, 50f),
-            //         Quantity = 3,
-            //         Rotation = new Range<float>(-1f, 1f),
-            //         Scale = new Range<float>(3.0f, 4.0f)
-            //     },
-            //     Modifiers =
-            //     {
-            //         new AgeModifier
-            //         {
-            //             Interpolators =
-            //             {
-            //                 new ColorInterpolator
-            //                 {
-            //                     StartValue = new HslColor(0.33f, 0.5f, 0.5f),
-            //                     EndValue = new HslColor(0.5f, 0.9f, 1.0f)
-            //                 }
-            //             }
-            //         },
-            //         new RotationModifier {RotationRate = -2.1f},
-            //         new RectangleContainerModifier {Width = 800, Height = 480},
-            //         new LinearGravityModifier {Direction = -Vector2.UnitY, Strength = 30f},
-            //     }
-            // });
-            
+
         }
 
         protected override void LoadContent()
@@ -115,15 +87,18 @@ namespace MonogameExtendedParticleSandbox
 
             base.Update(gameTime);
 
+            camera.canMove = !gui.isMouseInsideUI();
+
             particleController.update(gameTime);
             camera.update(gameTime);
         }
 
         public static BlendState blendState { get; set; } = BlendState.AlphaBlend;
+        public static Color clearColor { get; set; } = Color.CornflowerBlue ;
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(clearColor);
             spriteBatch.Begin(SpriteSortMode.BackToFront, blendState, transformMatrix: camera.getViewMatrix());
             spriteBatch.Draw(particleController.get());
             spriteBatch.End();

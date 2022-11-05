@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonogameExtendedParticleSandbox.src.gui
+namespace MonogameExtendedParticleSandbox.src
 {
     public class GridSizeHolder
     {

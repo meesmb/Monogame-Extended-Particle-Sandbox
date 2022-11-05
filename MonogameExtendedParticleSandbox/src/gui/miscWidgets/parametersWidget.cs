@@ -8,17 +8,17 @@ using MonoGame.Extended.Particles;
 using MonoGame.Extended.Particles.Profiles;
 using Myra.Graphics2D.UI;
 
-namespace MonogameExtendedParticleSandbox.src.gui
+namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
 {
     public class parametersWidget
-    {        
-        
+    {
+
         private readonly string CAPACITY = "Capacity";
         private readonly string LIFE_SPAN = "Life Span (ms)";
         private readonly string SPEED = "Speed";
-        private readonly string QUANTITY= "Quantity";
+        private readonly string QUANTITY = "Quantity";
         private readonly string ROTATION = "Rotation";
-        private readonly string SCALE = "Scale";
+        private readonly string SCALE = "Scale / 100";
 
         public EmitterIndex index { get; }
         private ParticleController controller;
@@ -82,8 +82,11 @@ namespace MonogameExtendedParticleSandbox.src.gui
             quantity.Value = DEFAULT_QUANTITY;
             rotation1.Value = DEFAULT_ROTATION_1;
             rotation2.Value = DEFAULT_ROTATION_2;
+
+
             scale1.Value = DEFAULT_SCALE_1;
             scale2.Value = DEFAULT_SCALE_2;
+
             speed1.Value = DEFAULT_SPEED_1;
             speed2.Value = DEFAULT_SPEED_2;
             c.Value = DEFAULT_CAPCITY;
@@ -119,29 +122,29 @@ namespace MonogameExtendedParticleSandbox.src.gui
             });
             rotation1.ValueChanged += GUI.createFloatEventHandler((v) =>
             {
-                controller.getEmitter(index).Parameters.Speed = calculateNewRangeMin(
-                    controller.getEmitter(index).Parameters.Speed,
+                controller.getEmitter(index).Parameters.Rotation = calculateNewRangeMin(
+                    controller.getEmitter(index).Parameters.Rotation,
                     v,
                     rotation2);
             });
             rotation2.ValueChanged += GUI.createFloatEventHandler((v) =>
             {
-                controller.getEmitter(index).Parameters.Speed = calculateNewRangeMax(
-                    controller.getEmitter(index).Parameters.Speed,
+                controller.getEmitter(index).Parameters.Rotation = calculateNewRangeMax(
+                    controller.getEmitter(index).Parameters.Rotation,
                     v,
                     rotation1);
             });
             scale1.ValueChanged += GUI.createFloatEventHandler((v) =>
             {
-                controller.getEmitter(index).Parameters.Speed = calculateNewRangeMin(
-                    controller.getEmitter(index).Parameters.Speed,
+                controller.getEmitter(index).Parameters.Scale = calculateNewRangeMin(
+                    controller.getEmitter(index).Parameters.Scale,
                     v,
                     scale2);
             });
             scale2.ValueChanged += GUI.createFloatEventHandler((v) =>
             {
-                controller.getEmitter(index).Parameters.Speed = calculateNewRangeMax(
-                    controller.getEmitter(index).Parameters.Speed,
+                controller.getEmitter(index).Parameters.Scale = calculateNewRangeMax(
+                    controller.getEmitter(index).Parameters.Scale,
                     v,
                     scale1);
             });
@@ -172,6 +175,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
                 max = min;
                 two.Value = max;
             }
+
             return new Range<float>(min, max);
         }
         private Range<float> calculateNewRangeMax(Range<float> old, float max, SpinButton one)
@@ -183,6 +187,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
                 min = max;
                 one.Value = min;
             }
+
             return new Range<float>(min, max);
         }
 

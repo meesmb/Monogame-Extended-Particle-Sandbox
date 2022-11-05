@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MonogameExtendedParticleSandbox.src.gui.profiles;
 using Myra.Graphics2D.UI;
 
-namespace MonogameExtendedParticleSandbox.src.gui
+namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
 {
     public class WidgetSelectWidget
     {

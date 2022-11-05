@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Particles;
 using MonoGame.Extended.TextureAtlases;
+using MonogameExtendedParticleSandbox.src.gui.miscWidgets;
 using Myra.Graphics2D.UI;
 
 namespace MonogameExtendedParticleSandbox.src.gui.textures

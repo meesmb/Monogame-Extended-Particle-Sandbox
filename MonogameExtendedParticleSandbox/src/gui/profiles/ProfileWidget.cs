@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MonoGame.Extended.Particles;
 using MonoGame.Extended.Particles.Profiles;
+using MonogameExtendedParticleSandbox.src.gui.miscWidgets;
 using Myra.Graphics2D.UI;
 
 namespace MonogameExtendedParticleSandbox.src.gui.profiles

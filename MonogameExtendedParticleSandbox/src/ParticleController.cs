@@ -19,10 +19,17 @@ namespace MonogameExtendedParticleSandbox.src
         public ParticleController(Texture2D texture, Vector2 pos)
         {
             region = new TextureRegion2D(texture);
-            effect = new ParticleEffect(autoTrigger: true)
+            effect = new ParticleEffect(autoTrigger: false)
             {
+                Scale = new Vector2(1, 1),
+                Rotation = 0,
                 Position = pos,
             };
+        }
+
+        public ParticleEffect getEffect()
+        {
+            return effect;
         }
 
         public TextureRegion2D getRegion()
@@ -52,7 +59,6 @@ namespace MonogameExtendedParticleSandbox.src
         /// <param name="index"></param>
         public void removeEmitter(EmitterIndex index)
         {
-            Console.Out.WriteLine(index.get());
             effect.Emitters[index.get()].Dispose();
             effect.Emitters.RemoveAt(index.get());
             index.delete();
@@ -63,14 +69,7 @@ namespace MonogameExtendedParticleSandbox.src
             return effect.Emitters[index.get()];
         }
 
-        public void update(GameTime gameTime, Transform2 transform)
-        {
-            effect.Position = transform.Position;
-            effect.Scale = transform.Scale;
-            effect.Rotation = transform.Rotation;
-
-            effect.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-        }
+        
 
         public void update(GameTime gameTime)
         {

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MonogameExtendedParticleSandbox.src.gui.modifiers;
+using MonogameExtendedParticleSandbox.src.gui.miscWidgets;
 using Myra.Graphics2D.UI;
 
-namespace MonogameExtendedParticleSandbox.src.gui
+namespace MonogameExtendedParticleSandbox.src.gui.modifiers
 {
     public class ModifiersWidget
     {
@@ -30,7 +30,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
         public ModifiersWidget(Grid topLevelGrid, GridSizeHolder topLevelGridSizeHolder, int rows, ParticleController controller, EmitterIndex index)
         {
             deletableListWidget = new DeletableWidgetList(topLevelGrid, "New Modifier", topLevelGridSizeHolder,
-                GUI.convertDictionaryToList(widgetTypes), 
+                GUI.convertDictionaryToList(widgetTypes),
                 (grid, i, widgetName) => widgetTypes[widgetName].create(grid, i, controller.getEmitter(index)));
         }
 

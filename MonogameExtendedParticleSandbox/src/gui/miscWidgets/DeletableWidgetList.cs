@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Myra.Graphics2D.UI;
 
-namespace MonogameExtendedParticleSandbox.src.gui
+namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
 {
     public class DeletableWidgetList
     {
@@ -62,7 +62,6 @@ namespace MonogameExtendedParticleSandbox.src.gui
 
             textButton.Click += (s, e) =>
             {
-                Console.Out.WriteLine("created at: " + modifierGridRowNum.RowCount);
                 var deleteButton = new TextButton()
                 {
                     Text = "-",
@@ -70,6 +69,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
                     GridRow = modifierGridRowNum.RowCount++,
                 };
                 modifierGrid.AddChild(deleteButton);
+                modifierGrid.ShowGridLines = true;
 
                 var modifier = onCreate(modifierGrid, modifierGridRowNum.RowCount++, currentWidgetType);
 
@@ -77,8 +77,6 @@ namespace MonogameExtendedParticleSandbox.src.gui
 
                 deleteButton.Click += (s, e) =>
                 {
-                    modifierGrid.RemoveChild(deleteButton);
-
                     modifier.delete();
 
                     int pos = modifierWidgets.IndexOf(modifier);
@@ -88,15 +86,17 @@ namespace MonogameExtendedParticleSandbox.src.gui
                         for (int i = pos + 1; i < modifierWidgets.Count; i++)
                         {
                             int row = modifierWidgets[i].getRow();
-                            var newRow = (row - 3 < 0) ? 0 : row - 3;
+                            var newRow = row - 2 < 0 ? 0 : row - 2;
                             modifierWidgets[i].setRow(newRow);
 
                             int deleteButtonRow = modifierWidgets[i].deleteButton.GridRow;
-                            int newDeleteButtonRow = (deleteButtonRow - 2 < 0) ? 0 : deleteButtonRow - 2;
+                            int newDeleteButtonRow = deleteButtonRow - 2 < 0 ? 0 : deleteButtonRow - 2;
                             modifierWidgets[i].deleteButton.GridRow = newDeleteButtonRow;
                         }
 
+                        modifierGrid.RemoveChild(deleteButton);
                         modifierWidgets.RemoveAt(pos);
+
                         modifierGridRowNum.RowCount -= 2;
 
                     }
@@ -119,7 +119,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
 
             topLevelGrid.RemoveChild(modifierGrid);
             topLevelGrid.RemoveChild(selectionGrid);
-            
+
         }
     }
 }

@@ -17,6 +17,8 @@ namespace MonogameExtendedParticleSandbox.src
         private int lastMouseWheelValue = 0;
         private Point lastMousePosition = new Point(0, 0);
 
+        public bool canMove { get; set; } = true;
+
         public Camera(ViewportAdapter adapter, Vector2 initialPos)
         {
             camera = new OrthographicCamera(adapter);
@@ -30,6 +32,10 @@ namespace MonogameExtendedParticleSandbox.src
 
         public void update(GameTime gameTime)
         {
+
+            if (!canMove)
+                return;
+
             if (this.lastMouseWheelValue > Mouse.GetState().ScrollWheelValue && camera.Zoom > camera.MinimumZoom + 1f)
             {
                 camera.Zoom -= 1f;

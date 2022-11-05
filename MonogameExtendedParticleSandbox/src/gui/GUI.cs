@@ -4,6 +4,10 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using MonoGame.Extended.Particles.Profiles;
+using MonogameExtendedParticleSandbox.src.gui.miscWidgets;
+using Myra;
+using Myra.Graphics2D;
+using Myra.Graphics2D.Brushes;
 using Myra.Graphics2D.TextureAtlases;
 using Myra.Graphics2D.UI;
 using Myra.Graphics2D.UI.ColorPicker;
@@ -22,6 +26,10 @@ namespace MonogameExtendedParticleSandbox.src.gui
 
         private DeletableWidgetList widgets;
         private BlendStateSelectorWidget blendStateSelector;
+        private ParticleEffectValuesWidget particleEffectValues;
+        private ClearColorPickerWidget clearColorPicker;
+
+        private ScrollViewer scrollViewer;
 
         private Dictionary<string, ParticleEmitterWidget> particleEmitters =
             new Dictionary<string, ParticleEmitterWidget>()
@@ -34,11 +42,13 @@ namespace MonogameExtendedParticleSandbox.src.gui
             topGrid = new Grid();
             topGrid.ColumnsProportions.Add(new Proportion());
             topGrid.ColumnsProportions.Add(new Proportion());
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
                 topGrid.RowsProportions.Add(new Proportion());
             gridSizeHolder.ColumnCount++;
 
             blendStateSelector = new BlendStateSelectorWidget(topGrid, gridSizeHolder);
+            clearColorPicker = new ClearColorPickerWidget(topGrid, gridSizeHolder);
+            particleEffectValues = new ParticleEffectValuesWidget(topGrid, gridSizeHolder, controller);
 
             widgets = new DeletableWidgetList(topGrid, "Create Emitter", gridSizeHolder,
                 convertDictionaryToList(particleEmitters),
@@ -52,7 +62,10 @@ namespace MonogameExtendedParticleSandbox.src.gui
                 });
 
             var pane = new HorizontalSplitPane();
-            var scrollViewer = new ScrollViewer();
+            pane.Width = 500;
+            pane.Background = new SolidBrush("#3b3852");
+
+            scrollViewer = new ScrollViewer();
             pane.Widgets.Add(scrollViewer);
             scrollViewer.Content = topGrid;
 
@@ -91,7 +104,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
             return dialog;
         }
 
-        public static SpinButton createSpinButton(Grid parent, string name, int row, int buttonColumn = 1, bool showLable = true, int decimalPlaces = 0)
+        public static SpinButton createSpinButton(Grid parent, string name, int row, int buttonColumn = 1, bool showLable = true, int decimalPlaces = 2)
         {
             if (showLable)
             {
@@ -195,8 +208,13 @@ namespace MonogameExtendedParticleSandbox.src.gui
             button2.ValueChanged += (s, e) =>
             {
                 if (button2.Value != null)
-                    callback1((int)button2.Value);
+                    callback2((int)button2.Value);
             };
+        }
+
+        public bool isMouseInsideUI()
+        {
+            return scrollViewer.IsMouseInside;
         }
 
 

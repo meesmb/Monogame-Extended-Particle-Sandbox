@@ -9,9 +9,11 @@ using MonoGame.Extended.Particles;
 using MonoGame.Extended.Particles.Modifiers;
 using MonoGame.Extended.Particles.Profiles;
 using MonogameExtendedParticleSandbox.src.gui.modifiers;
+using MonogameExtendedParticleSandbox.src.gui.profiles;
+using MonogameExtendedParticleSandbox.src.gui.textures;
 using Myra.Graphics2D.UI;
 
-namespace MonogameExtendedParticleSandbox.src.gui
+namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
 {
     public class ParticleEmitterWidget : DeletableListWidget
     {
@@ -33,7 +35,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
         private Grid parent;
         private GridSizeHolder parentHolder;
 
-        public ParticleEmitterWidget(ParticleController controller, Grid parent, GridSizeHolder parentHolder) 
+        public ParticleEmitterWidget(ParticleController controller, Grid parent, GridSizeHolder parentHolder)
         {
             this.controller = controller;
             this.parent = parent;
@@ -48,7 +50,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
             topLevelGrid.ColumnsProportions.Add(new Proportion());
             for (int i = 0; i < rows; i++)
                 topLevelGrid.RowsProportions.Add(new Proportion());
-
+            this.grid = topLevelGrid;
             parent.AddChild(topLevelGrid);
 
 
