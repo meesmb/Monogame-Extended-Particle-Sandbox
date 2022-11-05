@@ -26,6 +26,9 @@ namespace MonogameExtendedParticleSandbox.src
 
             camera.Position = initialPos;
 
+            camera.MaximumZoom = 100;
+            camera.MinimumZoom = 0.01f;
+
             this.lastMouseWheelValue = Mouse.GetState().ScrollWheelValue;
             lastMousePosition = Mouse.GetState().Position;
         }
@@ -36,13 +39,20 @@ namespace MonogameExtendedParticleSandbox.src
             if (!canMove)
                 return;
 
-            if (this.lastMouseWheelValue > Mouse.GetState().ScrollWheelValue && camera.Zoom > camera.MinimumZoom + 1f)
+            float zoomValue = 0.1f;
+            int r = (int)(camera.Zoom / 2.5);
+            zoomValue += r;
+
+            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift))
+                zoomValue += 1;
+
+            if (this.lastMouseWheelValue > Mouse.GetState().ScrollWheelValue && (camera.Zoom - zoomValue) > camera.MinimumZoom + 0.01f)
             {
-                camera.Zoom -= 1f;
+                camera.Zoom -= zoomValue;
             }
-            if (this.lastMouseWheelValue < Mouse.GetState().ScrollWheelValue && camera.Zoom < camera.MaximumZoom - 1f)
+            if (this.lastMouseWheelValue < Mouse.GetState().ScrollWheelValue && (camera.Zoom + zoomValue) < camera.MaximumZoom - 1f)
             {
-                camera.Zoom += 1f;
+                camera.Zoom += zoomValue;
             }
             lastMouseWheelValue = Mouse.GetState().ScrollWheelValue;
 
@@ -50,7 +60,7 @@ namespace MonogameExtendedParticleSandbox.src
             {
                 var diff = lastMousePosition - Mouse.GetState().Position;
 
-                camera.Move(diff.ToVector2());
+                camera.Move(diff.ToVector2() * (1/ camera.Zoom));
             }
 
             lastMousePosition = Mouse.GetState().Position;
