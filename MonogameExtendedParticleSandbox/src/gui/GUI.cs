@@ -7,19 +7,21 @@ using MonoGame.Extended.Particles.Profiles;
 using Myra.Graphics2D.TextureAtlases;
 using Myra.Graphics2D.UI;
 using Myra.Graphics2D.UI.ColorPicker;
+using Myra.Graphics2D.UI.File;
 using Myra.Utility;
 
 namespace MonogameExtendedParticleSandbox.src.gui
 {
     public class GUI
     {
-        private Desktop desktop;
+        private static Desktop desktop;
         private Dictionary<string, SpinButton> spinButtons = new Dictionary<string, SpinButton>();
 
         private GridSizeHolder gridSizeHolder = new GridSizeHolder();
         private Grid topGrid;
 
         private DeletableWidgetList widgets;
+        private BlendStateSelectorWidget blendStateSelector;
 
         private Dictionary<string, ParticleEmitterWidget> particleEmitters =
             new Dictionary<string, ParticleEmitterWidget>()
@@ -32,10 +34,11 @@ namespace MonogameExtendedParticleSandbox.src.gui
             topGrid = new Grid();
             topGrid.ColumnsProportions.Add(new Proportion());
             topGrid.ColumnsProportions.Add(new Proportion());
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
                 topGrid.RowsProportions.Add(new Proportion());
-
             gridSizeHolder.ColumnCount++;
+
+            blendStateSelector = new BlendStateSelectorWidget(topGrid, gridSizeHolder);
 
             widgets = new DeletableWidgetList(topGrid, "Create Emitter", gridSizeHolder,
                 convertDictionaryToList(particleEmitters),
@@ -57,6 +60,35 @@ namespace MonogameExtendedParticleSandbox.src.gui
             // Add it to the desktop
             desktop = new Desktop();
             desktop.Root = pane;
+        }
+
+        public static FileDialog createFileDialog(Grid parent, int row, string name, Action<string> onClose)
+        {
+            var button = new TextButton()
+            {
+                Text = name,
+                GridRow = row,
+                GridColumn = 0,
+            };
+
+            var dialog = new FileDialog(FileDialogMode.OpenFile)
+            {
+            };
+            button.Click += (s, e) =>
+            {
+                dialog.ShowModal(GUI.desktop);
+            };
+
+            dialog.Closed += (s, e) =>
+            {
+                if (dialog.Result)
+                {
+                    onClose(dialog.FilePath);
+                }
+            };
+
+            parent.AddChild(button);
+            return dialog;
         }
 
         public static SpinButton createSpinButton(Grid parent, string name, int row, int buttonColumn = 1, bool showLable = true, int decimalPlaces = 0)

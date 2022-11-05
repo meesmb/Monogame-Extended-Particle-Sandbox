@@ -119,10 +119,12 @@ namespace MonogameExtendedParticleSandbox
             camera.update(gameTime);
         }
 
+        public static BlendState blendState { get; set; } = BlendState.AlphaBlend;
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin(transformMatrix: camera.getViewMatrix());
+            spriteBatch.Begin(SpriteSortMode.BackToFront, blendState, transformMatrix: camera.getViewMatrix());
             spriteBatch.Draw(particleController.get());
             spriteBatch.End();
 
