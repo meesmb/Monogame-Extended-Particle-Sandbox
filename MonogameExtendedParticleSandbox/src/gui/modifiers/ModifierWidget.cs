@@ -31,17 +31,6 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
             emitter.Modifiers.Remove(modifier);
         }
 
-        protected Label buildLabel(Grid parent, string name, int row)
-        {
-            var label = new Label()
-            {
-                Text = name,
-                GridColumn = 1,
-                GridRow = row - 1
-            };
-            parent.AddChild(label);
-            this.label = label;
-            return label;
-        }
+        
     }
 }

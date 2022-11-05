@@ -23,13 +23,21 @@ namespace MonogameExtendedParticleSandbox
         private ParticleController particleController;
         private GUI gui;
 
+        private static Game1 self;
+
         private readonly int SCREEN_WIDTH = 1920;
         private readonly int SCREEN_HEIGHT = 1080;
         public Game1()
         {
+            self = this;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+        }
+
+        public static GraphicsDevice getGraphicsDevice()
+        {
+            return self.GraphicsDevice;
         }
 
         protected override void Initialize()

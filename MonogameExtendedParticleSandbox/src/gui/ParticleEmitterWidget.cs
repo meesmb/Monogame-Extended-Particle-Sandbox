@@ -27,6 +27,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
         private ProfilesWidget profilesWidget;
         private parametersWidget parametersWidget;
         private ModifiersWidget modifiersWidget;
+        private TexturesWidget textureWidget;
 
         private Grid topLevelGrid;
         private Grid parent;
@@ -53,8 +54,10 @@ namespace MonogameExtendedParticleSandbox.src.gui
 
             parametersWidget = new parametersWidget(controller, topLevelGridSize, Profile.BoxUniform(100, 100), topLevelGrid, rows, columns);
             index = parametersWidget.index;
-
             topLevelGridSize.RowCount++;
+
+            textureWidget = new TexturesWidget(controller, index, topLevelGrid, topLevelGridSize);
+
             profilesWidget =
                 new ProfilesWidget(topLevelGrid, topLevelGridSize, controller.getEmitter(index));
 

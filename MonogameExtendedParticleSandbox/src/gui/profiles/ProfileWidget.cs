@@ -9,7 +9,7 @@ using Myra.Graphics2D.UI;
 
 namespace MonogameExtendedParticleSandbox.src.gui.profiles
 {
-    public class ProfileWidget
+    public class ProfileWidget : DeletableListWidget
     {
         protected Grid parent;
         protected int row;
@@ -28,11 +28,6 @@ namespace MonogameExtendedParticleSandbox.src.gui.profiles
             return new ProfileWidget(parent, row, particleEmitter);
         }
 
-        public virtual void delete()
-        {
-            parent.RemoveChild(grid);
-        }
-
         protected Grid buildGrid(Grid parent, int row, int rowsInGrid, int columnsInGrid)
         {
             var grid = new Grid()
@@ -47,6 +42,11 @@ namespace MonogameExtendedParticleSandbox.src.gui.profiles
             parent.AddChild(grid);
             this.grid = grid;
             return grid;
+        }
+
+        protected override void onDelete()
+        {
+            parent.RemoveChild(grid);
         }
     }
 }
