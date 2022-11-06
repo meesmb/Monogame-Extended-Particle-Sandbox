@@ -19,7 +19,6 @@ namespace MonogameExtendedParticleSandbox.src.gui
     public class GUI : Exportable
     {
         private static Desktop desktop;
-        private Dictionary<string, SpinButton> spinButtons = new Dictionary<string, SpinButton>();
 
         private GridSizeHolder gridSizeHolder = new GridSizeHolder();
         private Grid topGrid;
@@ -52,6 +51,18 @@ namespace MonogameExtendedParticleSandbox.src.gui
             blendStateSelector = new BlendStateSelectorWidget(topGrid, gridSizeHolder);
             clearColorPicker = new ClearColorPickerWidget(topGrid, gridSizeHolder);
             particleEffectValues = new ParticleEffectValuesWidget(topGrid, gridSizeHolder, controller);
+
+            var resetButton = new TextButton()
+            {
+                Text = "Reset",
+                GridRow = gridSizeHolder.RowCount++,
+                GridColumn = 0
+            };
+            resetButton.TouchDown += (s, e) =>
+            {
+                controller.reset();
+            };
+            topGrid.AddChild(resetButton);
 
             emitters = new DeletableWidgetList(topGrid, "Create Emitter", gridSizeHolder,
                 convertDictionaryToList(particleEmitters),

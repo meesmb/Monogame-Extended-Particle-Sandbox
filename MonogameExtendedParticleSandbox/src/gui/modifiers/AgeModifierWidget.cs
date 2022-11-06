@@ -8,7 +8,6 @@ using MonoGame.Extended.Particles;
 using MonoGame.Extended.Particles.Modifiers;
 using MonoGame.Extended.Particles.Modifiers.Interpolators;
 using MonogameExtendedParticleSandbox.src.gui.interpolators;
-using MonogameExtendedParticleSandbox.src.gui.miscWidgets;
 
 namespace MonogameExtendedParticleSandbox.src.gui.modifiers
 {

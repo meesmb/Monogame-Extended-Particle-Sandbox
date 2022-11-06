@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using MonoGame.Extended.Particles;
 using MonoGame.Extended.Particles.Modifiers;
 using MonogameExtendedParticleSandbox.src.gui.interpolators;
-using MonogameExtendedParticleSandbox.src.gui.miscWidgets;
 using Myra.Graphics2D.UI;
 
 namespace MonogameExtendedParticleSandbox.src.gui.modifiers

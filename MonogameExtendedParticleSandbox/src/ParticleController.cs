@@ -40,7 +40,22 @@ namespace MonogameExtendedParticleSandbox.src
         public EmitterIndex addEmitter(ParticleEmitter emitter)
         {
             effect.Emitters.Add(emitter);
+
+            reset();
+
             return new EmitterIndex(effect.Emitters.Count - 1);
+        }
+
+        public void reset()
+        {
+            // make sure all emitters trigger at the same time!
+            foreach (var e in effect.Emitters)
+            {
+                var old = e.LifeSpan;
+                e.LifeSpan = TimeSpan.Zero;
+                e.Update(1);
+                e.LifeSpan = old;
+            }
         }
 
         public void setParticleReleaseParameters(int index, ParticleReleaseParameters parameters)

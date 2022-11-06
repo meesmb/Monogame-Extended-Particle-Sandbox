@@ -23,7 +23,12 @@ namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
         public EmitterIndex index { get; }
         private ParticleController controller;
         public Grid grid { get; set; }
+        private GridSizeHolder gridSizeHolder = new GridSizeHolder();
         public Grid topLevelGrid { get; }
+
+        private CheckBox autoTriggerCheckbox;
+        private SpinButton autoTriggerFrequency;
+        private ComboBox strategy;
 
         public readonly int DEFAULT_QUANTITY = 300;
         public readonly int DEFAULT_TIMESPAN = 2000;
@@ -37,6 +42,12 @@ namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
 
         public SpinButton c, ls, quantity, speed1, speed2, rotation1, rotation2, scale1, scale2;
 
+        private Dictionary<string, ParticleModifierExecutionStrategy> strategies =
+            new Dictionary<string, ParticleModifierExecutionStrategy>()
+            {
+                { "Parallel", ParticleModifierExecutionStrategy.Parallel },
+                { "Serial", ParticleModifierExecutionStrategy.Serial },
+            };
 
         public parametersWidget(ParticleController controller, GridSizeHolder topLevelGridRowNum, Profile profile, Grid topLevelGrid, int rows, int columns)
         {
@@ -54,18 +65,18 @@ namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
                 grid.RowsProportions.Add(new Proportion());
             topLevelGrid.AddChild(grid);
 
-            c = GUI.createSpinButton(grid, CAPACITY, 0);
-            ls = GUI.createSpinButton(grid, LIFE_SPAN, 1);
-            quantity = GUI.createSpinButton(grid, QUANTITY, 2);
+            c = GUI.createSpinButton(grid, CAPACITY, gridSizeHolder.RowCount++);
+            ls = GUI.createSpinButton(grid, LIFE_SPAN, gridSizeHolder.RowCount++);
+            quantity = GUI.createSpinButton(grid, QUANTITY, gridSizeHolder.RowCount++);
 
-            speed1 = GUI.createSpinButton(grid, SPEED, 3);
-            speed2 = GUI.createSpinButton(grid, SPEED, 3, 2, false);
+            speed1 = GUI.createSpinButton(grid, SPEED, gridSizeHolder.RowCount);
+            speed2 = GUI.createSpinButton(grid, SPEED, gridSizeHolder.RowCount++, 2, false);
 
-            rotation1 = GUI.createSpinButton(grid, ROTATION, 4);
-            rotation2 = GUI.createSpinButton(grid, ROTATION, 4, 2, false);
+            rotation1 = GUI.createSpinButton(grid, ROTATION, gridSizeHolder.RowCount);
+            rotation2 = GUI.createSpinButton(grid, ROTATION, gridSizeHolder.RowCount++, 2, false);
 
-            scale1 = GUI.createSpinButton(grid, SCALE, 5);
-            scale2 = GUI.createSpinButton(grid, SCALE, 5, 2, false);
+            scale1 = GUI.createSpinButton(grid, SCALE, gridSizeHolder.RowCount);
+            scale2 = GUI.createSpinButton(grid, SCALE, gridSizeHolder.RowCount++, 2, false);
 
             index = controller.addEmitter(new ParticleEmitter(controller.getRegion(), DEFAULT_CAPCITY, TimeSpan.FromMilliseconds(DEFAULT_TIMESPAN),
                 profile)
@@ -92,6 +103,38 @@ namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
             c.Value = DEFAULT_CAPCITY;
             ls.Value = DEFAULT_TIMESPAN;
             quantity.Value = DEFAULT_QUANTITY;
+
+            autoTriggerCheckbox = GUI.createCheckBox(grid, "Auto Trigger: ", gridSizeHolder.RowCount++);
+            autoTriggerCheckbox.PressedChanged += (s, e) =>
+            {
+                controller.getEmitter(index).AutoTrigger = autoTriggerCheckbox.IsChecked;
+            };
+            controller.getEmitter(index).AutoTrigger = autoTriggerCheckbox.IsChecked = true;
+
+            var autoTriggerFrequency =
+                GUI.createSpinButton(grid, "Auto Trigger Frequency: ", gridSizeHolder.RowCount++);
+            autoTriggerFrequency.ValueChanged += (s, e) =>
+            {
+                if (autoTriggerFrequency.Value != null)
+                    controller.getEmitter(index).AutoTriggerFrequency = (float)autoTriggerFrequency.Value;
+            };
+            autoTriggerFrequency.Value = controller.getEmitter(index).AutoTriggerFrequency;
+
+            Label stratLabel = new Label()
+            {
+                GridRow = gridSizeHolder.RowCount,
+                GridColumn = 0,
+                Text = "Execution Strategy"
+            };
+            grid.AddChild(stratLabel);
+            strategy = GUI.createComboBox(grid, gridSizeHolder.RowCount++, 1,
+                GUI.convertDictionaryToList(strategies),
+                (i, box) =>
+                {
+                    if (strategy != null)
+                        controller.getEmitter(index).ModifierExecutionStrategy = strategies[strategy.Items[i].Text];
+                    Console.Out.WriteLine(controller.getEmitter(index).ModifierExecutionStrategy.ToString());
+                });
 
             // parameters 
             c.ValueChanged += GUI.createFloatEventHandler((v) =>

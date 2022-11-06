@@ -27,8 +27,8 @@ namespace MonogameExtendedParticleSandbox.src.gui.interpolators
             var text = buildLabel(parent, "Opacity", row);
             var grid = buildGrid(parent, row, 2, 1);
 
-            var startVal = GUI.createSpinButton(grid, "StartValue / 100", 0);
-            var endVal = GUI.createSpinButton(grid, "StartValue / 100", 1);
+            var startVal = GUI.createSpinButton(grid, "StartValue", 0);
+            var endVal = GUI.createSpinButton(grid, "StartValue", 1);
 
             startVal.Value = DEFAULT_START_VALUE;
             endVal.Value = DEFAULT_END_VALUE;
@@ -36,12 +36,12 @@ namespace MonogameExtendedParticleSandbox.src.gui.interpolators
             startVal.ValueChanged += (sender, args) =>
             {
                 if (startVal.Value != null)
-                    i.StartValue = (float)startVal.Value / 100;
+                    i.StartValue = (float)startVal.Value;
             };
             endVal.ValueChanged += (sender, args) =>
             {
                 if (endVal.Value != null)
-                    i.EndValue = (float)endVal.Value / 100;
+                    i.EndValue = (float)endVal.Value;
             };
         }
 

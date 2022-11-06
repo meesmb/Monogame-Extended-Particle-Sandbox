@@ -35,6 +35,8 @@ namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
         private Grid parent;
         private GridSizeHolder parentHolder;
 
+        
+
         public ParticleEmitterWidget(ParticleController controller, Grid parent, GridSizeHolder parentHolder)
         {
             this.controller = controller;
@@ -53,10 +55,11 @@ namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
             this.grid = topLevelGrid;
             parent.AddChild(topLevelGrid);
 
-
             parametersWidget = new parametersWidget(controller, topLevelGridSize, Profile.BoxUniform(100, 100), topLevelGrid, rows, columns);
             index = parametersWidget.index;
             topLevelGridSize.RowCount++;
+
+            controller.getEmitter(index).ModifierExecutionStrategy = ParticleModifierExecutionStrategy.Parallel;
 
             textureWidget = new TexturesWidget(controller, index, topLevelGrid, topLevelGridSize);
 
@@ -68,7 +71,6 @@ namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
 
         public ParticleEmitterWidget()
         {
-
         }
 
         protected override void onDelete()
