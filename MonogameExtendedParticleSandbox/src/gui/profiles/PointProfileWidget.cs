@@ -20,6 +20,11 @@ namespace MonogameExtendedParticleSandbox.src.gui.profiles
             var grid = buildGrid(parent, row, 3, 1);
         }
 
+        public override string export()
+        {
+            return $@"Profile.Point()";
+        }
+
         public PointProfileWidget()
             : base(null, 0, null)
         {

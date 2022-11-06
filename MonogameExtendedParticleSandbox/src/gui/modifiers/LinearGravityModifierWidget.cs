@@ -11,10 +11,11 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
 {
     public class LinearGravityModifierWidget : ModifierWidget
     {
+        private LinearGravityModifier m;
         private LinearGravityModifierWidget(Grid parent, int row, ParticleEmitter emitter) : base(parent, row, emitter)
         {
-            var modifier = new LinearGravityModifier();
-            this.modifier = modifier;
+            m = new LinearGravityModifier();
+            this.modifier = m;
             emitter.Modifiers.Add(modifier);
 
             var text = buildLabel(parent, "Linear Gravity", row);
@@ -26,26 +27,26 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
 
             direction1.ValueChanged += (e, s) =>
             {
-                var old = modifier.Direction;
+                var old = m.Direction;
                 if (s.NewValue != null)
                 {
                     old.X = (int)s.NewValue;
-                    modifier.Direction = old;
+                    m.Direction = old;
                 }
             };
             direction2.ValueChanged += (e, s) =>
             {
-                var old = modifier.Direction;
+                var old = m.Direction;
                 if (s.NewValue != null)
                 {
                     old.Y = (int)s.NewValue;
-                    modifier.Direction = old;
+                    m.Direction = old;
                 }
             };
             strength.ValueChanged += (e, s) =>
             {
                 if (s.NewValue != null)
-                    modifier.Strength = (int)s.NewValue;
+                    m.Strength = (int)s.NewValue;
             };
 
         }
@@ -57,6 +58,17 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
         public override ModifierWidget create(Grid parent, int row, ParticleEmitter emitter)
         {
             return new LinearGravityModifierWidget(parent, row, emitter);
+        }
+
+        public override string export()
+        {
+            return $@"
+                    new CircleContainerModifier()
+                    {{
+                        Direction = new Vector2({m.Direction.X}, {m.Direction.Y}),
+                        Strength = {m.Strength},
+                    }},
+                    ";
         }
     }
 }

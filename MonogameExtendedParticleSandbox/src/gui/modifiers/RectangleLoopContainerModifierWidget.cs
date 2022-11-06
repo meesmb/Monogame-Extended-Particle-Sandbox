@@ -11,10 +11,11 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
 {
     public class RectangleLoopContainerModifierWidget : ModifierWidget
     {
+        private RectangleLoopContainerModifier m;
         private RectangleLoopContainerModifierWidget(Grid parent, int row, ParticleEmitter emitter) : base(parent, row, emitter)
         {
-            var modifier = new RectangleLoopContainerModifier();
-            this.modifier = modifier;
+            m = new RectangleLoopContainerModifier();
+            this.modifier = m;
             emitter.Modifiers.Add(modifier);
 
             var text = buildLabel(parent, "Rectangle Loop Container", row);
@@ -26,12 +27,12 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
             width.ValueChanged += (e, s) =>
             {
                 if (s.NewValue != null)
-                    modifier.Width = (int)s.NewValue;
+                    m.Width = (int)s.NewValue;
             };
             height.ValueChanged += (e, s) =>
             {
                 if (s.NewValue != null)
-                    modifier.Height = (int)s.NewValue;
+                    m.Height = (int)s.NewValue;
             };
 
         }
@@ -43,6 +44,17 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
         public override ModifierWidget create(Grid parent, int row, ParticleEmitter emitter)
         {
             return new RectangleLoopContainerModifierWidget(parent, row, emitter);
+        }
+
+        public override string export()
+        {
+            return $@"
+                    new RectangleLoopContainerModifier()
+                    {{
+                        Width = {m.Width},
+                        Height = {m.Height},
+                    }},
+                    ";
         }
     }
 }

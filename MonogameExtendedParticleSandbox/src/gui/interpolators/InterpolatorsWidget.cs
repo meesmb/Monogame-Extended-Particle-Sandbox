@@ -11,7 +11,7 @@ using Myra.Graphics2D.UI;
 
 namespace MonogameExtendedParticleSandbox.src.gui.interpolators
 {
-    public class InterpolatorsWidget
+    public class InterpolatorsWidget : Exportable
     {
         private Dictionary<string, InterpolatorWidget> widgetTypes = new Dictionary<string, InterpolatorWidget>()
         {
@@ -38,6 +38,11 @@ namespace MonogameExtendedParticleSandbox.src.gui.interpolators
         public void delete()
         {
 
+        }
+
+        public string export()
+        {
+            return deletableListWidget.export();
         }
     }
 }

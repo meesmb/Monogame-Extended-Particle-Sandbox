@@ -12,10 +12,11 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
 {
     public class RotationModifierWidget : ModifierWidget
     {
+        private RotationModifier m;
         private RotationModifierWidget(Grid parent, int row, ParticleEmitter emitter) : base(parent, row, emitter)
         {
-            var modifier = new RotationModifier();
-            this.modifier = modifier;
+            m = new RotationModifier();
+            this.modifier = m;
             emitter.Modifiers.Add(modifier);
 
             var text = buildLabel(parent, "Rotation", row);
@@ -27,7 +28,7 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
             rotationRate.ValueChanged += (e, s) =>
             {
                 if (s.NewValue != null)
-                    modifier.RotationRate = (float)s.NewValue;
+                    m.RotationRate = (float)s.NewValue;
             };
             
         }
@@ -39,6 +40,16 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
         public override ModifierWidget create(Grid parent, int row, ParticleEmitter emitter)
         {
             return new RotationModifierWidget(parent, row, emitter);
+        }
+
+        public override string export()
+        {
+            return $@"
+                    new RotationModifier()
+                    {{
+                        RotationRate = {m.RotationRate},
+                    }},
+                    ";
         }
     }
 }

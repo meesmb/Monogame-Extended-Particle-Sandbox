@@ -9,11 +9,11 @@ using Myra.Graphics2D.UI;
 
 namespace MonogameExtendedParticleSandbox.src.gui.textures
 {
-    public class TexturesWidget
+    public class TexturesWidget : Exportable
     {
         private Dictionary<string, TextureWidget> textures = new Dictionary<string, TextureWidget>()
         {
-            { "Single Pixel", new SinglePixelColoredTextureWidget() },
+            {"Single Pixel", new SinglePixelColoredTextureWidget() },
             {"Custom Texture", new CustomTextureWidget()}
         };
 
@@ -30,6 +30,11 @@ namespace MonogameExtendedParticleSandbox.src.gui.textures
         public void delete()
         {
             selectWidget.delete();
+        }
+
+        public string export()
+        {
+            return selectWidget.export();
         }
     }
 }

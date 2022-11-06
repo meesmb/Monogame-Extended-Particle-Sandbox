@@ -49,5 +49,9 @@ namespace MonogameExtendedParticleSandbox.src.gui.profiles
         {
             parent.RemoveChild(grid);
         }
+        public override string export()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

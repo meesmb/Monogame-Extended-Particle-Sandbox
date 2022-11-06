@@ -18,7 +18,7 @@ namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
         private readonly string SPEED = "Speed";
         private readonly string QUANTITY = "Quantity";
         private readonly string ROTATION = "Rotation";
-        private readonly string SCALE = "Scale / 100";
+        private readonly string SCALE = "Scale";
 
         public EmitterIndex index { get; }
         private ParticleController controller;
@@ -35,7 +35,7 @@ namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
         public readonly int DEFAULT_SCALE_1 = 3;
         public readonly int DEFAULT_SCALE_2 = 4;
 
-        private SpinButton c, ls, quantity, speed1, speed2, rotation1, rotation2, scale1, scale2;
+        public SpinButton c, ls, quantity, speed1, speed2, rotation1, rotation2, scale1, scale2;
 
 
         public parametersWidget(ParticleController controller, GridSizeHolder topLevelGridRowNum, Profile profile, Grid topLevelGrid, int rows, int columns)
@@ -54,18 +54,18 @@ namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
                 grid.RowsProportions.Add(new Proportion());
             topLevelGrid.AddChild(grid);
 
-            var c = GUI.createSpinButton(grid, CAPACITY, 0);
-            var ls = GUI.createSpinButton(grid, LIFE_SPAN, 1);
-            var quantity = GUI.createSpinButton(grid, QUANTITY, 2);
+            c = GUI.createSpinButton(grid, CAPACITY, 0);
+            ls = GUI.createSpinButton(grid, LIFE_SPAN, 1);
+            quantity = GUI.createSpinButton(grid, QUANTITY, 2);
 
-            var speed1 = GUI.createSpinButton(grid, SPEED, 3);
-            var speed2 = GUI.createSpinButton(grid, SPEED, 3, 2, false);
+            speed1 = GUI.createSpinButton(grid, SPEED, 3);
+            speed2 = GUI.createSpinButton(grid, SPEED, 3, 2, false);
 
-            var rotation1 = GUI.createSpinButton(grid, ROTATION, 4);
-            var rotation2 = GUI.createSpinButton(grid, ROTATION, 4, 2, false);
+            rotation1 = GUI.createSpinButton(grid, ROTATION, 4);
+            rotation2 = GUI.createSpinButton(grid, ROTATION, 4, 2, false);
 
-            var scale1 = GUI.createSpinButton(grid, SCALE, 5);
-            var scale2 = GUI.createSpinButton(grid, SCALE, 5, 2, false);
+            scale1 = GUI.createSpinButton(grid, SCALE, 5);
+            scale2 = GUI.createSpinButton(grid, SCALE, 5, 2, false);
 
             index = controller.addEmitter(new ParticleEmitter(controller.getRegion(), DEFAULT_CAPCITY, TimeSpan.FromMilliseconds(DEFAULT_TIMESPAN),
                 profile)

@@ -55,5 +55,10 @@ namespace MonogameExtendedParticleSandbox.src.gui.profiles
         {
             return new BoxUniformProfileWidget(parent, row, particleEmitter);
         }
+
+        public override string export()
+        {
+            return $@"Profile.BoxUniform({width}, {height})";
+        }
     }
 }

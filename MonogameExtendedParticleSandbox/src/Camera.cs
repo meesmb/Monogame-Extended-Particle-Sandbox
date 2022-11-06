@@ -35,7 +35,6 @@ namespace MonogameExtendedParticleSandbox.src
 
         public void update(GameTime gameTime)
         {
-
             if (!canMove)
                 return;
 

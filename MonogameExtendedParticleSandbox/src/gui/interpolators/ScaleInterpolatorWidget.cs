@@ -14,15 +14,16 @@ namespace MonogameExtendedParticleSandbox.src.gui.interpolators
 
         private readonly Vector2 DEFAULT_START_VALUE = new Vector2(1, 1);
         private readonly Vector2 DEFAULT_END_VALUE = new Vector2(10, 10);
+        private ScaleInterpolator i;
 
         private ScaleInterpolatorWidget(Grid parent, int row, List<Interpolator> interpolators) : base(parent, row, interpolators)
         {
-            var interpolator = new ScaleInterpolator()
+            i = new ScaleInterpolator()
             {
                 StartValue = DEFAULT_START_VALUE,
                 EndValue = DEFAULT_END_VALUE
             };
-            this.interpolator = interpolator;
+            this.interpolator = i;
             interpolators.Add(interpolator);
 
             var text = buildLabel(parent, "Scale", row);
@@ -30,18 +31,18 @@ namespace MonogameExtendedParticleSandbox.src.gui.interpolators
 
             GUI.createDualSpinButton(grid, 0, 0, "StartValue", (v) =>
             {
-                interpolator.StartValue = new Vector2(v, interpolator.StartValue.X);
+                i.StartValue = new Vector2(v, i.StartValue.X);
             }, (v) =>
             {
-                interpolator.StartValue = new Vector2(interpolator.StartValue.Y, v);
+                i.StartValue = new Vector2(i.StartValue.Y, v);
 
             }, (int)DEFAULT_START_VALUE.X, (int)DEFAULT_START_VALUE.Y);
             GUI.createDualSpinButton(grid, 1, 0, "EndValue", (v) =>
             {
-                interpolator.EndValue = new Vector2(v, interpolator.EndValue.X);
+                i.EndValue = new Vector2(v, i.EndValue.X);
             }, (v) =>
             {
-                interpolator.EndValue = new Vector2(interpolator.EndValue.Y, v);
+                i.EndValue = new Vector2(i.EndValue.Y, v);
 
             }, (int)DEFAULT_END_VALUE.X, (int)DEFAULT_END_VALUE.Y);
         }
@@ -53,6 +54,17 @@ namespace MonogameExtendedParticleSandbox.src.gui.interpolators
         public override InterpolatorWidget create(Grid parent, int row, List<Interpolator> interpolators)
         {
             return new ScaleInterpolatorWidget(parent, row, interpolators);
+        }
+
+        public override string export()
+        {
+            return $@"
+                    new ScaleInterpolator()
+                    {{
+                        StartValue = new Vector2({i.StartValue.X}, {i.StartValue.Y}),
+                        VelocityColor = new Vector2({i.EndValue.X}, {i.EndValue.Y}),
+                    }},
+                    ";
         }
     }
 }

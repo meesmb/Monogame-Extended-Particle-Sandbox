@@ -43,5 +43,10 @@ namespace MonogameExtendedParticleSandbox.src.gui.textures
             emitter.TextureRegion = DEFAULT_REGION_2D;
             texture.Dispose();
         }
+
+        public override string export()
+        {
+            return "";
+        }
     }
 }

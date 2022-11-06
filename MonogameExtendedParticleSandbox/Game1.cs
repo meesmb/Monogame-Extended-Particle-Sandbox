@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -30,6 +31,8 @@ namespace MonogameExtendedParticleSandbox
         private readonly int SCREEN_HEIGHT = 1080;
         public Game1()
         {
+            System.Globalization.CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+
             self = this;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";

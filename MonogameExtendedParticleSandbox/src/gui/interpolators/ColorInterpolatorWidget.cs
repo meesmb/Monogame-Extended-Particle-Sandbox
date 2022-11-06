@@ -15,16 +15,16 @@ namespace MonogameExtendedParticleSandbox.src.gui.interpolators
 
         private readonly Color DEFAULT_START_VALUE = Color.Yellow;
         private readonly Color DEFAULT_END_VALUE = Color.Blue;
-
+        private ColorInterpolator i;
 
         private ColorInterpolatorWidget(Grid parent, int row, List<Interpolator> interpolators) : base(parent, row, interpolators)
         {
-            var interpolator = new ColorInterpolator()
+            i = new ColorInterpolator()
             {
                 StartValue = DEFAULT_START_VALUE.ToHsl(),
                 EndValue = DEFAULT_END_VALUE.ToHsl()
             };
-            this.interpolator = interpolator;
+            this.interpolator = i;
             interpolators.Add(interpolator);
 
             var text = buildLabel(parent, "Color", row);
@@ -32,12 +32,12 @@ namespace MonogameExtendedParticleSandbox.src.gui.interpolators
 
             var picker1 = GUI.createColorPicker(grid, "StartValue", 0, 0, DEFAULT_START_VALUE, (hsl) =>
             {
-                interpolator.StartValue = hsl;
+                i.StartValue = hsl;
             });
 
             var picker2 = GUI.createColorPicker(grid, "EndValue", 1, 0, DEFAULT_END_VALUE, (hsl) =>
             {
-                interpolator.EndValue = hsl;
+                i.EndValue = hsl;
             });
         }
 
@@ -48,6 +48,17 @@ namespace MonogameExtendedParticleSandbox.src.gui.interpolators
         public override InterpolatorWidget create(Grid parent, int row, List<Interpolator> interpolators)
         {
             return new ColorInterpolatorWidget(parent, row, interpolators);
+        }
+
+        public override string export()
+        {
+            return $@"
+                    new ColorInterpolator()
+                    {{
+                        StartValue = new HslColor({i.StartValue.H}, {i.StartValue.S}, {i.StartValue.L}),
+                        EndValue = new HslColor({i.EndValue.H}, {i.EndValue.S}, {i.EndValue.L}),
+                    }},
+                    ";
         }
     }
 }

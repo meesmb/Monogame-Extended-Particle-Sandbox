@@ -12,10 +12,11 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
 {
     public class RectangleContainerModifierWidget : ModifierWidget
     {
+        private RectangleContainerModifier m;
         private RectangleContainerModifierWidget(Grid parent, int row, ParticleEmitter emitter) : base(parent, row, emitter)
         {
-            var modifier = new RectangleContainerModifier();
-            this.modifier = modifier;
+            m = new RectangleContainerModifier();
+            this.modifier = m;
             emitter.Modifiers.Add(modifier);
 
             var text = buildLabel(parent, "Rectangle", row);
@@ -23,7 +24,7 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
 
             var width = GUI.createSpinButton(grid, "Width", 0);
             var height = GUI.createSpinButton(grid, "Heigth", 1);
-            var restitution = GUI.createSpinButton(grid, "Restitution / 100", 2);
+            var restitution = GUI.createSpinButton(grid, "Restitution", 2);
 
             width.Value = 150;
             height.Value = 150;
@@ -32,17 +33,17 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
             width.ValueChanged += (e, s) =>
             {
                 if (s.NewValue != null)
-                    modifier.Width = (int)s.NewValue;
+                    m.Width = (int)s.NewValue;
             };
             height.ValueChanged += (e, s) =>
             {
                 if (s.NewValue != null)
-                    modifier.Height = (int)s.NewValue;
+                    m.Height = (int)s.NewValue;
             };
             restitution.ValueChanged += (e, s) =>
             {
                 if (s.NewValue != null)
-                    modifier.RestitutionCoefficient = (float)((int)s.NewValue / 100);
+                    m.RestitutionCoefficient = (float)((int)s.NewValue / 100);
             };
         }
 
@@ -53,6 +54,18 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
         public override ModifierWidget create(Grid parent, int row, ParticleEmitter emitter)
         {
             return new RectangleContainerModifierWidget(parent, row, emitter);
+        }
+
+        public override string export()
+        {
+            return $@"
+                    new RectangleContainerModifier()
+                    {{
+                        Width = {m.Width},
+                        Height = {m.Height},
+                        RestitutionCoefficient = {m.RestitutionCoefficient},
+                    }},
+                    ";
         }
     }
 }

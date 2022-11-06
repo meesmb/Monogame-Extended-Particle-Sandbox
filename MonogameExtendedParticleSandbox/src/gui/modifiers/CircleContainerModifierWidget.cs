@@ -11,10 +11,11 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
 {
     public class CircleContainerModifierWidget : ModifierWidget
     {
+        private CircleContainerModifier m;
         private CircleContainerModifierWidget(Grid parent, int row, ParticleEmitter emitter) : base(parent, row, emitter)
         {
-            var modifier = new CircleContainerModifier();
-            this.modifier = modifier;
+            m = new CircleContainerModifier();
+            this.modifier = m;
             emitter.Modifiers.Add(modifier);
 
             var text = buildLabel(parent, "Circle Container", row);
@@ -27,16 +28,16 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
             radius.ValueChanged += (e, s) =>
             {
                 if (s.NewValue != null)
-                    modifier.Radius = (float)s.NewValue;
+                    m.Radius = (float)s.NewValue;
             };
             inside.PressedChanged += (e, s) =>
             {
-                modifier.Inside = inside.IsChecked;
+                m.Inside = inside.IsChecked;
             };
             RestitionCoefficient.ValueChanged += (e, s) =>
             {
                 if (s.NewValue != null)
-                    modifier.RestitutionCoefficient = (float)s.NewValue;
+                    m.RestitutionCoefficient = (float)s.NewValue;
             };
         }
 
@@ -47,6 +48,17 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
         public override ModifierWidget create(Grid parent, int row, ParticleEmitter emitter)
         {
             return new CircleContainerModifierWidget(parent, row, emitter);
+        }
+        public override string export()
+        {
+            return $@"
+                    new CircleContainerModifier()
+                    {{
+                        Radius = {m.Radius},
+                        Inside = {m.Inside},
+                        RestitutionCoefficient = {m.RestitutionCoefficient.ToString().Replace("T", "t").Replace("F", "f")}
+                    }},
+                    ";
         }
     }
 }

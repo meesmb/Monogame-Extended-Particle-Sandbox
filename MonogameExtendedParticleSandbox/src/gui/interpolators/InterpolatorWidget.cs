@@ -39,5 +39,9 @@ namespace MonogameExtendedParticleSandbox.src.gui.interpolators
             interpolators.Remove(interpolator);
         }
 
+        public override string export()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -16,7 +16,7 @@ using Myra.Utility;
 
 namespace MonogameExtendedParticleSandbox.src.gui
 {
-    public class GUI
+    public class GUI : Exportable
     {
         private static Desktop desktop;
         private Dictionary<string, SpinButton> spinButtons = new Dictionary<string, SpinButton>();
@@ -24,7 +24,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
         private GridSizeHolder gridSizeHolder = new GridSizeHolder();
         private Grid topGrid;
 
-        private DeletableWidgetList widgets;
+        private DeletableWidgetList emitters;
         private BlendStateSelectorWidget blendStateSelector;
         private ParticleEffectValuesWidget particleEffectValues;
         private ClearColorPickerWidget clearColorPicker;
@@ -37,8 +37,11 @@ namespace MonogameExtendedParticleSandbox.src.gui
                 { "Default", new ParticleEmitterWidget() }
             };
 
+        private ParticleController controller;
+
         public GUI(ParticleController controller)
         {
+            this.controller = controller;
             topGrid = new Grid();
             topGrid.ColumnsProportions.Add(new Proportion());
             topGrid.ColumnsProportions.Add(new Proportion());
@@ -50,7 +53,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
             clearColorPicker = new ClearColorPickerWidget(topGrid, gridSizeHolder);
             particleEffectValues = new ParticleEffectValuesWidget(topGrid, gridSizeHolder, controller);
 
-            widgets = new DeletableWidgetList(topGrid, "Create Emitter", gridSizeHolder,
+            emitters = new DeletableWidgetList(topGrid, "Create Emitter", gridSizeHolder,
                 convertDictionaryToList(particleEmitters),
                 (grid, i, arg3) =>
                 {
@@ -61,13 +64,51 @@ namespace MonogameExtendedParticleSandbox.src.gui
                     return new ParticleEmitterWidget(controller, grid, holder);
                 });
 
-            var pane = new HorizontalSplitPane();
+            // scrollviewer that contains all the content widgets
+            scrollViewer = new ScrollViewer();
+            scrollViewer.Content = topGrid;
+
+            // file menu
+            var menuExport = new MenuItem()
+            {
+                Text = "Export to c#",
+                ShortcutText = "Ctrl+E"
+            };
+            menuExport.Selected += (s, e) =>
+            {
+                var dialog = new FileDialog(FileDialogMode.SaveFile)
+                {
+                };
+                dialog.ShowModal(GUI.desktop);
+
+                dialog.Closed += (s, e) =>
+                {
+                    if (dialog.Result)
+                    {
+                        var code = export();
+                        Exportable.writeToFile(code, dialog.FilePath);
+                    }
+                };
+            };
+
+            var menuFile = new MenuItem()
+            {
+                Text = "File"
+            };
+            menuFile.Items.Add(menuExport);
+
+            var menu = new HorizontalMenu()
+            {
+                VerticalAlignment = VerticalAlignment.Stretch,
+            };
+            menu.Items.Add(menuFile);
+
+            // containing panel
+            var pane = new VerticalStackPanel();
             pane.Width = 500;
             pane.Background = new SolidBrush("#3b3852");
-
-            scrollViewer = new ScrollViewer();
+            pane.Widgets.Add(menu);
             pane.Widgets.Add(scrollViewer);
-            scrollViewer.Content = topGrid;
 
 
             // Add it to the desktop
@@ -153,11 +194,7 @@ namespace MonogameExtendedParticleSandbox.src.gui
             {
                 if (button.IsPressed)
                 {
-                    var shouldOpen = !parent.GetChildren().Contains(colorPicker);
-                    if (shouldOpen)
-                        parent.AddChild(colorPicker);
-                    else
-                        colorPicker.Close();
+                    colorPicker.ShowModal(GUI.desktop);
                 }
             };
 
@@ -291,6 +328,21 @@ namespace MonogameExtendedParticleSandbox.src.gui
             return items;
         }
 
-
+        public string export()
+        {
+            Exportable.startExport();
+            var data = $@"
+                    var {Exportable.EFFECT_NAME} = new ParticleEffect(autoTrigger: false)
+                    {{
+                        Position = new Vector2({controller.getEffect().Position.X}, {controller.getEffect().Position.Y}),
+                        Emitters = new List<ParticleEmitter>
+                        {{
+                            {emitters.export()}
+                        }}
+                    }};
+                   ";
+            var textures = Exportable.generateTextureRegions();
+            return textures + data;
+        }
     }
 }

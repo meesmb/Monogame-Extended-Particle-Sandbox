@@ -7,7 +7,7 @@ using Myra.Graphics2D.UI;
 
 namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
 {
-    public class DeletableWidgetList
+    public class DeletableWidgetList : Exportable
     {
         private string currentWidgetType = "";
 
@@ -120,6 +120,17 @@ namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
             topLevelGrid.RemoveChild(modifierGrid);
             topLevelGrid.RemoveChild(selectionGrid);
 
+        }
+
+        public string export()
+        {
+            string val = "";
+            foreach (var w in modifierWidgets) 
+            {
+                val += w.export();
+            }
+
+            return val;
         }
     }
 }

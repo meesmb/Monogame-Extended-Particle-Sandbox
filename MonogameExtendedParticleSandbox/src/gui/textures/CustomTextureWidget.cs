@@ -16,6 +16,7 @@ namespace MonogameExtendedParticleSandbox.src.gui.textures
 {
     public class CustomTextureWidget : TextureWidget
     {
+        private string currentPath = "Icon.bmp";
         public CustomTextureWidget(Grid parent, int row, ParticleEmitter emitter, Texture2D texture)
             : base(parent, row, emitter, texture)
         {
@@ -24,6 +25,7 @@ namespace MonogameExtendedParticleSandbox.src.gui.textures
 
             var dialog = GUI.createFileDialog(grid, 0, "Choose Texture", s =>
             {
+                currentPath = s;
                 var newTex = getTexture(s, Game1.getGraphicsDevice());
                 var oldTex = texture;
                 texture = newTex;
@@ -51,5 +53,19 @@ namespace MonogameExtendedParticleSandbox.src.gui.textures
 
             return texture;
         }
+
+        public override string export()
+        {
+            var num = Exportable.textureNum;
+            var texture = $@"
+var {Exportable.TEXTURE_NAME + num} = Texture2D.FromFile(GraphicsDevice, {'\"'}{currentPath}{'\"'});
+";
+            var region =
+                $@"var {Exportable.TEXTURE_REGION_NAME + num} = new TextureRegion2D({Exportable.TEXTURE_NAME + num})";
+            Exportable.textures.Add(texture + region);
+
+            return Exportable.TEXTURE_REGION_NAME + num;
+        }
     }
 }
+

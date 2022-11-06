@@ -81,5 +81,24 @@ namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
             parentHolder.RowCount--;
         }
 
+        public override string export()
+        {
+            return $@"
+                    new ParticleEmitter({textureWidget.export()}, {parametersWidget.c.Value}, TimeSpan.FromMilliseconds({parametersWidget.ls.Value}), {profilesWidget.export()})
+                    {{
+                        Parameters = new ParticleReleaseParameters
+                        {{
+                            Speed = new Range<float>({parametersWidget.speed1.Value}, {parametersWidget.speed2.Value}),
+                            Quantity = {parametersWidget.quantity.Value},
+                            Rotation = new Range<float>({parametersWidget.rotation1.Value}, {parametersWidget.rotation2.Value}),
+                            Scale = new Range<float>({parametersWidget.scale1.Value}, {parametersWidget.scale2.Value}),
+                        }},
+                        Modifiers = 
+                        {{
+                            {modifiersWidget.export()}
+                        }}
+                    }},
+                    ";
+        }
     }
 }

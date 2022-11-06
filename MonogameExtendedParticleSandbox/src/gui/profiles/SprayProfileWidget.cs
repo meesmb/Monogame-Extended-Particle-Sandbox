@@ -14,6 +14,10 @@ namespace MonogameExtendedParticleSandbox.src.gui.profiles
     {
         private Vector2 direction = new Vector2(1f, 1f);
         private int spread = 2;
+        public override string export()
+        {
+            return $@"Profile.Spray({direction}, {spread})";
+        }
 
         public SprayProfileWidget(Grid parent, int row, ParticleEmitter particleEmitter)
             : base(parent, row, particleEmitter)
@@ -35,7 +39,7 @@ namespace MonogameExtendedParticleSandbox.src.gui.profiles
                 }
             };
 
-            GUI.createDualSpinButton(grid, 1, 0, "Direction / 100", (v) =>
+            GUI.createDualSpinButton(grid, 1, 0, "Direction", (v) =>
             {
                 direction.X = v / 100;
                 particleEmitter.Profile = Profile.Spray(direction, spread);

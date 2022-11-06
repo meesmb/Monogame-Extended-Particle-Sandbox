@@ -31,7 +31,10 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
         {
             emitter.Modifiers.Remove(modifier);
         }
+        public override string export()
+        {
+            throw new NotImplementedException();
+        }
 
-        
     }
 }

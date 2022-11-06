@@ -8,13 +8,13 @@ using Myra.Graphics2D.UI;
 
 namespace MonogameExtendedParticleSandbox.src.gui.modifiers
 {
-    public class ModifiersWidget
+    public class ModifiersWidget : Exportable
     {
         private Dictionary<string, ModifierWidget> widgetTypes = new Dictionary<string, ModifierWidget>()
         {
             {"Age", new AgeModifierWidget()}, // needs interpolators
             {"Circle", new CircleContainerModifierWidget()},
-            {"RectangleLoop", new RectangleLoopContainerModifierWidget()},
+            {"Rectangle Loop", new RectangleLoopContainerModifierWidget()},
             {"Rectangle", new RectangleContainerModifierWidget()},
             {"Drag", new DragModifierWidget()},
             {"Linear Gravity", new LinearGravityModifierWidget()},
@@ -31,13 +31,21 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
         {
             deletableListWidget = new DeletableWidgetList(topLevelGrid, "New Modifier", topLevelGridSizeHolder,
                 GUI.convertDictionaryToList(widgetTypes),
-                (grid, i, widgetName) => widgetTypes[widgetName].create(grid, i, controller.getEmitter(index)));
+                (grid, i, widgetName) =>
+                {
+                    return widgetTypes[widgetName].create(grid, i, controller.getEmitter(index));
+                });
         }
 
         public void delete()
         {
 
             deletableListWidget.delete();
+        }
+
+        public string export()
+        {
+            return deletableListWidget.export();
         }
     }
 }

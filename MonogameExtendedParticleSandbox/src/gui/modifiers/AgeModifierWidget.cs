@@ -44,5 +44,18 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
         {
             return new AgeModifierWidget(parent, row, emitter);
         }
+
+        public override string export()
+        {
+            return $@"
+                    new AgeModifier
+                    {{
+                        Interpolators = 
+                        {{
+                            {interpolators.export()}
+                        }}
+                    }},
+                    ";
+        }
     }
 }

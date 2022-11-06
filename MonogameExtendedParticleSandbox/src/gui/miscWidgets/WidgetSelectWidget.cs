@@ -8,12 +8,13 @@ using Myra.Graphics2D.UI;
 
 namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
 {
-    public class WidgetSelectWidget
+    public class WidgetSelectWidget : Exportable
     {
         private DeletableListWidget currentWidget;
         private Grid topGrid, widgetGrid, grid;
         private Label label;
         private ComboBox combo;
+
         public WidgetSelectWidget(Grid topLevelGrid, GridSizeHolder topLevelGridSizeHolder,
             List<ListItem> widgetTypes, string name, Func<Grid, int, string, DeletableListWidget> onCreate)
         {
@@ -69,6 +70,11 @@ namespace MonogameExtendedParticleSandbox.src.gui.miscWidgets
             widgetGrid.RemoveChild(combo);
             topGrid.RemoveChild(grid);
             topGrid.RemoveChild(widgetGrid);
+        }
+
+        public string export()
+        {
+            return currentWidget.export();
         }
     }
 }

@@ -29,5 +29,12 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
         {
             return new OpacityFastFadeModifierWidget(parent, row, emitter);
         }
+
+        public override string export()
+        {
+            return $@"
+                    new OpacityFastFadeModifier(),
+                    ";
+        }
     }
 }

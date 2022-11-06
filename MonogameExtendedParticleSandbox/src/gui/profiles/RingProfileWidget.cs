@@ -20,7 +20,10 @@ namespace MonogameExtendedParticleSandbox.src.gui.profiles
             {"None", Profile.CircleRadiation.None},
             {"Out", Profile.CircleRadiation.Out},
         };
-
+        public override string export()
+        {
+            return $@"Profile.Ring({radiusValue}, {radiation})";
+        }
         public RingProfileWidget(Grid parent, int row, ParticleEmitter particleEmitter)
             : base(parent, row, particleEmitter)
         {

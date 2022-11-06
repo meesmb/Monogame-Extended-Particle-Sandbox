@@ -12,16 +12,16 @@ namespace MonogameExtendedParticleSandbox.src.gui.interpolators
     {
         private readonly float DEFAULT_START_VALUE = 0;
         private readonly float DEFAULT_END_VALUE = 5;
-
+        private RotationInterpolator i;
 
         private RotationInterpolatorWidget(Grid parent, int row, List<Interpolator> interpolators) : base(parent, row, interpolators)
         {
-            var interpolator = new RotationInterpolator()
+            i = new RotationInterpolator()
             {
                 StartValue = DEFAULT_START_VALUE,
                 EndValue = DEFAULT_END_VALUE
             };
-            this.interpolator = interpolator;
+            this.interpolator = i;
             interpolators.Add(interpolator);
 
             var text = buildLabel(parent, "Rotation", row);
@@ -36,12 +36,12 @@ namespace MonogameExtendedParticleSandbox.src.gui.interpolators
             startVal.ValueChanged += (sender, args) =>
             {
                 if (startVal.Value != null)
-                    interpolator.StartValue = (float)startVal.Value;
+                    i.StartValue = (float)startVal.Value;
             };
             endVal.ValueChanged += (sender, args) =>
             {
                 if (endVal.Value != null)
-                    interpolator.EndValue = (float)endVal.Value;
+                    i.EndValue = (float)endVal.Value;
             };
         }
 
@@ -52,6 +52,17 @@ namespace MonogameExtendedParticleSandbox.src.gui.interpolators
         public override InterpolatorWidget create(Grid parent, int row, List<Interpolator> interpolators)
         {
             return new RotationInterpolatorWidget(parent, row, interpolators);
+        }
+
+        public override string export()
+        {
+            return $@"
+                    new RotationInterpolator()
+                    {{
+                        StartValue = {i.StartValue},
+                        VelocityColor = {i.EndValue},
+                    }},
+                    ";
         }
     }
 }

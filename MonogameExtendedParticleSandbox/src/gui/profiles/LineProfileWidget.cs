@@ -14,7 +14,10 @@ namespace MonogameExtendedParticleSandbox.src.gui.profiles
     {
         private Vector2 axis = new Vector2(1f, 1f);
         private int length = 150;
-
+        public override string export()
+        {
+            return $@"Profile.Line({axis}, {length})";
+        }
         public LineProfileWidget(Grid parent, int row, ParticleEmitter particleEmitter)
             : base(parent, row, particleEmitter)
         {
@@ -35,7 +38,7 @@ namespace MonogameExtendedParticleSandbox.src.gui.profiles
                 }
             };
 
-            GUI.createDualSpinButton(grid, 1, 0, "Axis / 100", (v) =>
+            GUI.createDualSpinButton(grid, 1, 0, "Axis", (v) =>
             {
                 axis.X = v / 100;
                 particleEmitter.Profile = Profile.Line(axis, length);

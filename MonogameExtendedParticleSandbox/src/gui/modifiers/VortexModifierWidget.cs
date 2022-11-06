@@ -11,10 +11,11 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
 {
     public class VortexModifierWidget : ModifierWidget
     {
+        private VortexModifier m;
         private VortexModifierWidget(Grid parent, int row, ParticleEmitter emitter) : base(parent, row, emitter)
         {
-            var modifier = new VortexModifier();
-            this.modifier = modifier;
+            m = new VortexModifier();
+            this.modifier = m;
             emitter.Modifiers.Add(modifier);
 
             var text = buildLabel(parent, "Vortex", row);
@@ -27,31 +28,31 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
 
             posx.ValueChanged += (e, s) =>
             {
-                var old = modifier.Position;
+                var old = m.Position;
                 if (s.NewValue != null)
                 {
                     old.X = (int)s.NewValue;
-                    modifier.Position = old;
+                    m.Position = old;
                 }
             };
             posy.ValueChanged += (e, s) =>
             {
-                var old = modifier.Position;
+                var old = m.Position;
                 if (s.NewValue != null)
                 {
                     old.Y = (int)s.NewValue;
-                    modifier.Position = old;
+                    m.Position = old;
                 }
             };
             mass.ValueChanged += (e, s) =>
             {
                 if (s.NewValue != null)
-                    modifier.Mass = (int)s.NewValue;
+                    m.Mass = (int)s.NewValue;
             };
             maxSpeed.ValueChanged += (e, s) =>
             {
                 if (s.NewValue != null)
-                    modifier.MaxSpeed = (float)s.NewValue;
+                    m.MaxSpeed = (float)s.NewValue;
             };
 
         }
@@ -63,6 +64,17 @@ namespace MonogameExtendedParticleSandbox.src.gui.modifiers
         public override ModifierWidget create(Grid parent, int row, ParticleEmitter emitter)
         {
             return new VortexModifierWidget(parent, row, emitter);
+        }
+        public override string export()
+        {
+            return $@"
+                    new VortexModifier()
+                    {{
+                        Position = new Vector2({m.Position.X}, {m.Position.Y}),
+                        MaxSpeed = {m.MaxSpeed},
+                        Mass = {m.Mass},
+                    }},
+                    ";
         }
     }
 }
